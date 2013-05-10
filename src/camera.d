@@ -9,8 +9,8 @@ module camera;
 
 import std.math;
 
-import matrix;
-import vector;
+import math.matrix;
+import math.vector;
 
 /**
  * TODO: dirty flag for when pvmatrix needs to be updated

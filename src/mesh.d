@@ -73,7 +73,7 @@ struct Mesh
     /**
      * adds a set of faces to this mesh
      */
-    void add(Face f[])
+    void add(const Face f[])
     {
         faces ~= f;
         fdirty = true;
@@ -82,7 +82,7 @@ struct Mesh
     /**
      * adds a set of vertices to this mesh
      */
-    void add(Vertex v[])
+    void add(const Vertex v[])
     {
         verts ~= v;
         vdirty = true;
@@ -91,7 +91,7 @@ struct Mesh
     /**
      * adds a single face to this mesh
      */
-    void add(Face f)
+    void add(const Face f)
     {
         faces ~= f;
         fdirty = true;
@@ -100,7 +100,7 @@ struct Mesh
     /**
      * adds a single vertex to this mesh
      */
-    void add(Vertex v)
+    void add(const Vertex v)
     {
         verts ~= v;
         vdirty = true;
@@ -122,7 +122,7 @@ struct Mesh
         vdirty = true;
     }
 
-    this(Vertex verts[])
+    this(const Vertex verts[])
     {
         ibuffer = Buffer.init;
         vbuffer = Buffer.init;
@@ -131,7 +131,7 @@ struct Mesh
         fdirty = false;
     }
 
-    this(Vertex verts[], Face faces[])
+    this(const Vertex verts[], const Face faces[])
     {
         ibuffer = Buffer.init;
         vbuffer = Buffer.init;
@@ -230,4 +230,45 @@ struct Mesh
         file.write(faces);
         file.close();
     }
+
+    static ref Mesh getUnitQuad() { return _quad; }
+
+    static const Vertex[] quad_verts =  
+    [
+         // Triangle 1
+         {
+             [-1,-1,0],
+             [0,0,1],
+             [0,0]
+         },
+         {
+             [1,-1,0],
+             [0,0,1],
+             [1,0]
+         },
+         {
+             [1,1,0],
+             [0,0,1],
+             [1,1]
+         },
+         
+         // Triangle 2
+         {
+             [-1,-1,0],
+             [0,0,1],
+             [0,0]
+         },
+         {
+             [1,1,0],
+             [0,0,1],
+             [1,1]
+         },
+         {
+             [-1,1,0],
+             [0,0,1],
+             [0,1]
+         }
+     ];
+
+    static Mesh _quad = Mesh(quad_verts);
 }

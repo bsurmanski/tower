@@ -7,7 +7,7 @@ import c.lua;
 import gl.glb.glb;
 import lua.api;
 import lua.luah;
-import item;
+import entity.item;
 import lua.lib.libentity;
 
 immutable Api libitem = {

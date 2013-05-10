@@ -10,16 +10,18 @@ import std.stdio;
 import lua.state;
 import lua.lib.all;
 import camera;
-import vector;
-import entity;
+import math.vector;
+import entity.entity;
 import mesh;
 import map;
+import ui.hud.hud;
 
 GLuint primQuery;
 Buffer buffer = void;
 Mesh quad = void;
 Map testmap = void;
 Camera cam;
+Hud hud_display;
 bool running;
 
  
@@ -60,6 +62,8 @@ void init(int w, int h)
     State state = new State();
     state.register(luaApis);
     state.run("res/default.lua");
+
+    hud_display = new Hud();
 }
 
 void draw()
@@ -67,6 +71,7 @@ void draw()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     testmap.draw(cam);
     Entity.drawAll(cam);
+    hud_display.draw();
     glfwSwapBuffers();
 }
 

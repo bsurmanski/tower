@@ -5,6 +5,8 @@
  * Brandon Surmanski
  */
 
+module math.vector;
+
 import std.stdio;
 import std.math;
 

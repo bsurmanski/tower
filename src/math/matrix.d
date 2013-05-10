@@ -5,12 +5,12 @@
  * Brandon Surmanski
  */
 
-module matrix;
+module math.matrix;
 
 import std.stdio;
 import std.math;
 
-import vector;
+import math.vector;
 
 struct Matrix4
 {

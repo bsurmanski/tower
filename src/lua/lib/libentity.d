@@ -10,8 +10,8 @@ module lua.lib.libentity;
 import std.stdio;
 import c.lua;
 
-import vector;
-import entity;
+import math.vector;
+import entity.entity;
 import lua.api;
 import lua.luah;
 

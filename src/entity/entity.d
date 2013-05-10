@@ -5,7 +5,7 @@
  * Brandon Surmanski
  */
 
-module entity;
+module entity.entity;
 
 import std.math;
 import std.algorithm;
@@ -13,10 +13,10 @@ import std.algorithm;
 import c.gl.gl;
 import gl.glb.glb;
 
+import math.matrix;
+import math.vector;
 import camera;
 import mesh;
-import matrix;
-import vector;
 
 abstract class EntityInfo
 {
@@ -68,11 +68,6 @@ abstract class Entity
 
     this(int type, void *data = null)
     {
-        if(mesh == Mesh.init)
-        {
-            mesh = Mesh(USV);
-        }
-
         this.type = type;
         this.data = data;
         position = Vector4(0,0,0,0);
@@ -85,7 +80,7 @@ abstract class Entity
 
     void draw(Camera cam);
     void update(float dt);
-
+    
     static void updateAll(float dt)
     {
         foreach(e; registry)
@@ -117,46 +112,8 @@ abstract class Entity
        
         program.uniform(Shader.VERTEX_SHADER, 0, (float[16]).sizeof, true, mat.ptr);
         program.texture(Shader.FRAGMENT_SHADER, 0, info.shadow);
-        program.draw(mesh.getVertexBuffer());
+        program.draw(Mesh.getUnitQuad().getVertexBuffer());
 
         glEnable(GL_DEPTH_TEST);
     }
-
-    static Mesh mesh;
-    static Vertex USV[] = 
-    [
-         // Triangle 1
-         {
-             [-1,-1,0],
-             [0,0,1],
-             [0,0]
-         },
-         {
-             [1,-1,0],
-             [0,0,1],
-             [1,0]
-         },
-         {
-             [1,1,0],
-             [0,0,1],
-             [1,1]
-         },
-         
-         // Triangle 2
-         {
-             [-1,-1,0],
-             [0,0,1],
-             [0,0]
-         },
-         {
-             [1,1,0],
-             [0,0,1],
-             [1,1]
-         },
-         {
-             [-1,1,0],
-             [0,0,1],
-             [0,1]
-         }
-     ];
 }

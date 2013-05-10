@@ -17,7 +17,7 @@ import c.gl.glext;
 
 import mesh;
 import camera;
-import matrix;
+import math.matrix;
 
 struct Tile
 {

@@ -5,16 +5,16 @@
  * Brandon Surmanski
  */
 
-module item;
+module entity.item;
 
 import gl.glb.glb;
 
 import std.math;
 
-import matrix;
+import entity.entity;
+import entity.sprite;
+import math.matrix;
 import camera;
-import entity;
-import sprite;
 
 class ItemInfo : SpriteInfo
 {

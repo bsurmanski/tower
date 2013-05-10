@@ -5,7 +5,7 @@
  * Brandon Surmanski
  */
 
-module actor;
+module entity.actor;
 
 import std.stdio;
 import std.math;
@@ -14,11 +14,11 @@ import std.conv;
 import c.gl.glfw;
 import gl.glb.glb;
 
+import entity.entity;
+import entity.sprite;
+import math.matrix;
+import math.vector;
 import camera;
-import matrix;
-import vector;
-import sprite;
-import entity;
 
 /**
  * Represents shared data across an actor type. Kind of like a runtime class

@@ -13,7 +13,7 @@ import c.lua;
 import gl.glb.glb;
 import lua.api;
 import lua.luah;
-import actor;
+import entity.actor;
 import lua.lib.libentity;
 
 immutable Api libactor = {

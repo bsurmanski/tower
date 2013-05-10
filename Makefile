@@ -1,5 +1,31 @@
-SRC=src/*.d src/lua/*.d src/lua/lib/*.d /usr/local/include/d/gl/glb/*.d /usr/local/include/d/c/*.d
-INC=-I/usr/local/include/d -Isrc
+SRC=src/main.d \
+	src/camera.d \
+	src/keys.d\
+	src/map.d\
+	src/mesh.d\
+	src/lua/api.d\
+	src/lua/luah.d\
+	src/lua/state.d\
+	src/lua/table.d\
+	src/lua/lib/all.d\
+	src/lua/lib/libactor.d\
+	src/lua/lib/libentity.d\
+	src/lua/lib/libitem.d\
+	src/entity/actor.d\
+	src/entity/entity.d\
+	src/entity/item.d\
+	src/entity/sprite.d\
+	src/math/matrix.d\
+	src/math/vector.d\
+	src/ui/component.d\
+	src/ui/glbComponent.d\
+	src/ui/imageComponent.d\
+	src/ui/hud/hud.d\
+	/usr/local/include/d/gl/glb/*.d \
+	/usr/local/include/d/c/*.d
+
+INC=-I/usr/local/include/d \
+	-Isrc
 
 dmd:
 	dmd $(SRC) -L-lglfw -L-lGL -L-llua -L-lglb $(INC) -g -debug -unittest -odbuild -ofa.out

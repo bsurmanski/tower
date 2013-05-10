@@ -5,7 +5,7 @@
  * Brandon Surmanski
  */
 
-module sprite;
+module entity.sprite;
 
 import std.stdio;
 import std.math;
@@ -14,10 +14,11 @@ import std.conv;
 import c.gl.glfw;
 import gl.glb.glb;
 
+import entity.entity;
+import math.matrix;
+import math.vector;
 import camera;
-import matrix;
-import vector;
-import entity;
+import mesh;
 
 /**
  * Represents shared data across an actor type. Kind of like a runtime class
@@ -73,6 +74,6 @@ abstract class Sprite : Entity
         mat = cam.getMatrix() * mat;
         program.uniform(Shader.VERTEX_SHADER, 0, (float[16]).sizeof, true, mat.ptr);
         program.texture(Shader.FRAGMENT_SHADER, 0, sinfo.texture);
-        program.draw(mesh.getVertexBuffer());
+        program.draw(Mesh.getUnitQuad().getVertexBuffer());
     }
 }
