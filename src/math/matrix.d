@@ -199,9 +199,9 @@ struct Matrix4
 
 
             //matrix-vector
-            Vec4 test = Vec4([1.0f,2.0f,3.0f,4.0f]);
+            Vec4 test = Vec4(1.0f,2.0f,3.0f,4.0f);
             Vec4 mtest = c * test;
-            assert(mtest == Vec4([3.0f,1.0f,2.0f,4.0f]));
+            assert(mtest == Vec4(3.0f,1.0f,2.0f,4.0f));
 
             // matrix matrix scale
             assert((a * b) == a);
@@ -217,7 +217,7 @@ struct Matrix4
 /*{{{ Scale */
         void scale(float f)
         {
-            scale(Vec4([f,f,f,f]));
+            scale(Vec4(f,f,f,f));
         }
 
         void scale(float x, float y, float z, float w = 1.0f)
@@ -232,7 +232,7 @@ struct Matrix4
 
         Matrix4 scaled(float f) const
         {
-            return scaled(Vec4([f,f,f,f]));
+            return scaled(Vec4(f,f,f,f));
         }
 
         Matrix4 scaled(Vec4 v) const
