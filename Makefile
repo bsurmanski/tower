@@ -21,6 +21,9 @@ SRC=src/main.d \
 	src/ui/glbComponent.d\
 	src/ui/imageComponent.d\
 	src/ui/hud/hud.d\
+	src/ui/hud/itemSelectComponent.d\
+	src/ui/hud/healthComponent.d\
+	src/ui/hud/wealthComponent.d\
 	/usr/local/include/d/gl/glb/*.d \
 	/usr/local/include/d/c/*.d
 

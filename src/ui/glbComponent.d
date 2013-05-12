@@ -1,3 +1,9 @@
+/**
+ * glbComponent.d
+ * tower
+ * May 6, 2013
+ * Brandon Surmanski
+ */
 
 module ui.glbComponent;
 
@@ -17,6 +23,8 @@ abstract class GlbComponent : Component
 
         if(!_init)
         {
+            _init = true;
+
             _nearest_sampler = Sampler();
             _linear_sampler = Sampler();
             _program = Program();
@@ -25,8 +33,8 @@ abstract class GlbComponent : Component
             _linear_sampler.setFilter(Sampler.LINEAR, Sampler.LINEAR);
 
             _program = Program();
-            _program.source("res/glsl/drawtexture.vs", Shader.VERTEX_SHADER);
-            _program.source("res/glsl/drawtexture.fs", Shader.FRAGMENT_SHADER);
+            _program.source("res/glsl/drawui.vs", Shader.VERTEX_SHADER);
+            _program.source("res/glsl/drawui.fs", Shader.FRAGMENT_SHADER);
         }
     }
 }

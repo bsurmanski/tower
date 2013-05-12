@@ -9,6 +9,9 @@ module ui.hud.hud;
 
 import gl.glb.glb;
 
+import ui.hud.itemSelectComponent;
+import ui.hud.healthComponent;
+import ui.hud.wealthComponent;
 import ui.component;
 import ui.imageComponent;
 
@@ -19,11 +22,23 @@ class Hud
     this()
     {
         components = [];
-        
-        Component bat = new ImageComponent("res/tex/bat.tga");
-        bat.size[] *= 4;
-        bat.right = 8;
-        components ~= bat;
+
+        Component itemSelect = new ItemSelectComponent();
+        components ~= itemSelect;
+
+        Component healthBar = new HealthComponent();
+        components ~= healthBar;
+
+        Component wealth = new WealthComponent();
+        components ~=  wealth;
+    }
+
+    void update(float dt)
+    {
+        foreach(comp; components)
+        {
+            comp.update(dt);
+        }
     }
 
     void draw()

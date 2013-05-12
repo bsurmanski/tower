@@ -108,7 +108,7 @@ struct Matrix4
         /**
          * orientation constructor
          */
-        this(Vector4 up, Vector4 fwd)
+        this(Vec4 up, Vec4 fwd)
         {
             //TODO 
         }
@@ -140,9 +140,9 @@ struct Matrix4
             return ret;
         }
 
-        Vector4 opBinary(string op)(auto ref const Vector4 rhs)
+        Vec4 opBinary(string op)(auto ref const Vec4 rhs)
         {
-            Vector4 ret;
+            Vec4 ret;
             for(auto j = 0; j < 4; j++)
             {
                 ret[j] = v[j]         * rhs[0] + 
@@ -199,9 +199,9 @@ struct Matrix4
 
 
             //matrix-vector
-            Vector4 test = Vector4([1.0f,2.0f,3.0f,4.0f]);
-            Vector4 mtest = c * test;
-            assert(mtest == Vector4([3.0f,1.0f,2.0f,4.0f]));
+            Vec4 test = Vec4([1.0f,2.0f,3.0f,4.0f]);
+            Vec4 mtest = c * test;
+            assert(mtest == Vec4([3.0f,1.0f,2.0f,4.0f]));
 
             // matrix matrix scale
             assert((a * b) == a);
@@ -217,25 +217,25 @@ struct Matrix4
 /*{{{ Scale */
         void scale(float f)
         {
-            scale(Vector4([f,f,f,f]));
+            scale(Vec4([f,f,f,f]));
         }
 
         void scale(float x, float y, float z, float w = 1.0f)
         {
-            scale(Vector4(x,y,z,w)); 
+            scale(Vec4(x,y,z,w)); 
         }
 
-        void scale(Vector4 v)
+        void scale(Vec4 v)
         {
             this.v = (scaled(v)).v;
         }
 
         Matrix4 scaled(float f) const
         {
-            return scaled(Vector4([f,f,f,f]));
+            return scaled(Vec4([f,f,f,f]));
         }
 
-        Matrix4 scaled(Vector4 v) const
+        Matrix4 scaled(Vec4 v) const
         {
             Matrix4 tmat;
             tmat.v[XX] = v[0];
@@ -250,20 +250,20 @@ struct Matrix4
 /*{{{ Translate */
         void translate(float x, float y, float z)
         {
-            translate(Vector4(x, y, z, 0.0f));
+            translate(Vec4(x, y, z, 0.0f));
         }
 
-        void translate(Vector4 v)
+        void translate(Vec4 v)
         {
             this.v = (translated(v)).v;
         }
 
         typeof(this) translated(float x, float y, float z) const
         {
-            return translated(Vector4(x, y, z, 0.0f)); 
+            return translated(Vec4(x, y, z, 0.0f)); 
         }
 
-        typeof(this) translated(Vector4 v) const
+        typeof(this) translated(Vec4 v) const
         {
             Matrix4 tmat;
             tmat.v[WX] = v[0];
@@ -278,16 +278,16 @@ struct Matrix4
 /*{{{ Rotate*/
         void rotate(float angle, float x, float y, float z)
         {
-            Vector4 vec = Vector4(x, y, z, 0.0f);
+            Vec4 vec = Vec4(x, y, z, 0.0f);
             rotate(angle, vec);
         }
 
-        void rotate(float angle, Vector4 vec)
+        void rotate(float angle, Vec4 vec)
         {
             this.v = this.rotated(angle, vec).v;
         }
 
-        Matrix4 rotated(float angle, Vector4 vec) const
+        Matrix4 rotated(float angle, Vec4 vec) const
         {
             Matrix4 aux;
             if(abs(angle) < float.epsilon) return Matrix4(this);
@@ -295,7 +295,7 @@ struct Matrix4
             float len = vec.length();
             if(len < float.epsilon) return Matrix4(this);
 
-            Vector4 n = vec.normalized();
+            Vec4 n = vec.normalized();
 
             float c = cos(angle);
             float t = 1.0f - c;

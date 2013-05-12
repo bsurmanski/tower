@@ -1,3 +1,9 @@
+/**
+ * imageComponent.d
+ * tower
+ * May 6, 2013
+ * Brandon Surmanski
+ */
 
 module ui.imageComponent;
 
@@ -12,6 +18,8 @@ import ui.glbComponent;
 class ImageComponent : GlbComponent
 {
     Texture texture = void;
+
+    this(){super(); texture = Texture.init;}
 
     this(string imagenm)
     {

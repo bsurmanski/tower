@@ -26,12 +26,8 @@ import camera;
  */
 class ActorInfo : SpriteInfo
 {
-
-    bool isMain = false;
-
-    this(string name, string description, string textureFilenm, bool isMain)
+    this(string name, string description, string textureFilenm)
     {
-        this.isMain = isMain;
         super(name, description, textureFilenm);
     }
 }
@@ -42,19 +38,38 @@ class ActorInfo : SpriteInfo
  */
 class Actor : Sprite 
 {
-    ubyte currentItem;
+    static Actor actorFocus = null;
+
+    ubyte selectedItem;
     ubyte nitems;
+    uint healthmax;
+    uint health;
+    uint wealth;
 
     this(int id)
     {
-        currentItem = 0;
+        selectedItem = 0;
         nitems = 0;
+
+        healthmax = 100;
+        health = 60;
+        wealth = 0;
         super(id);
+    }
+
+    @property static void focus(Actor a)
+    {
+        actorFocus = a;
+    }
+
+    @property static Actor focus() 
+    {
+        return actorFocus;
     }
 
     override void draw(Camera cam)
     {
-        cam.position = position + Vector4(0.0f, 3.5f, 5.0f, 0.0f);
+        cam.position = position + Vec4(0.0f, 3.5f, 5.0f, 0.0f);
         super.draw(cam);
     }
 
@@ -62,8 +77,28 @@ class Actor : Sprite
     override void update(float dt)
     {
         ActorInfo ainfo = cast(ActorInfo) info;
-        if(ainfo.isMain) // we are the main character! control!!!!
+        if(this == focus) // we are the main character! control!!!!
         {
+            if(glfwGetKey('1'))
+            {
+                selectedItem = 0;
+            }
+
+            if(glfwGetKey('2'))
+            {
+                selectedItem = 1;
+            }
+
+            if(glfwGetKey('3'))
+            {
+                selectedItem = 2;
+            }
+
+            if(glfwGetKey('4'))
+            {
+                selectedItem = 3;
+            }
+
             if(glfwGetKey('W'))
             {
                 position.z -= 0.05f;

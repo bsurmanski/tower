@@ -29,7 +29,7 @@ extern (C):
 int libentity_move(lua_State *l)
 {
     Entity ent = cast(Entity) lua_touserdata(l, 1);
-    Vector4 offset;
+    Vec4 offset;
     offset.x = lua_tonumber(l, 2);
     offset.y = lua_tonumber(l, 3);
     offset.z = lua_tonumber(l, 4);
@@ -44,7 +44,7 @@ int libentity_move(lua_State *l)
 int libentity_moveTo(lua_State *l)
 {
     Entity ent = cast(Entity) lua_touserdata(l, 1);
-    Vector4 offset;
+    Vec4 offset;
     offset.x = lua_tonumber(l, 2);
     offset.y = lua_tonumber(l, 3);
     offset.z = lua_tonumber(l, 4);

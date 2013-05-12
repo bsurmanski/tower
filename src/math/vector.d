@@ -10,23 +10,63 @@ module math.vector;
 import std.stdio;
 import std.math;
 
-struct TVector4(T)
+struct TVec2(T)
+{
+    T v[2];
+
+    @property ref T x() { return v[0]; }
+    @property ref T y() { return v[1]; }
+    @property ref T[2] data() { return v; }
+
+    @property TVec3!T Vec3() { return TVec3!T(v[0], v[1], cast(T) 0); }
+    @property TVec4!T Vec4() { return TVec3!T(v[0], v[1], cast(T) 0, cast(T) 0); }
+
+    this(T)(auto ref const T[] arr)
+    in
+    {
+        assert(arr.length >= 2);
+    }
+    body
+    {
+        v = arr[0..2].dup;
+    }
+}
+
+struct TVec3(T)
+{
+    T v[3];
+
+    @property ref T x() { return v[0]; }
+    @property ref T y() { return v[1]; }
+    @property ref T z() { return v[2]; }
+    @property ref T[3] data() { return v; }
+
+    @property TVec4!T Vec4() { return TVec4!T(v[0], v[1], v[2], cast(T) 0); }
+
+    this(T)(auto ref const T[] arr)
+    in
+    {
+        assert(arr.length >= 3);
+    }
+    body
+    {
+        v = arr[0..3].dup;
+    }
+}
+
+struct TVec4(T)
 {
     private:
     T v[4];
 
-    enum {
-        X = 0,
-        Y = 1,
-        Z = 2,
-        W = 3,
-    };
     public:
 
     @property ref T x() { return v[0]; }
     @property ref T y() { return v[1]; }
     @property ref T z() { return v[2]; }
     @property ref T w() { return v[3]; }
+    @property ref T[4] data() { return v; }
+    @property TVec3!T Vec3() { return TVec3!T(v[0..3]); }
 
     this(T)(T x, T y, T z, T w)
     {
@@ -38,9 +78,9 @@ struct TVector4(T)
 
     this(T)(auto ref const T[] arr)
     in {
-        assert(arr.length == 4);
+        assert(arr.length >= 4);
     } body{
-        this.v = arr.dup;    
+        this.v = arr[0..4].dup;    
     }
 
     this(T)(auto ref const T[4] arr)
@@ -48,9 +88,9 @@ struct TVector4(T)
         v = arr.dup;
     }
 
-    TVector4!T opBinary(string op)(auto ref const T rhs) const
+    TVec4!T opBinary(string op)(auto ref const T rhs) const
     {
-        TVector4!T ret;
+        TVec4!T ret;
 
         for(auto i = 0; i < 4; i++)
         {
@@ -59,9 +99,9 @@ struct TVector4(T)
         return ret;
     }
 
-    TVector4!T opBinary(string op)(auto ref const TVector4!T rhs) const
+    TVec4!T opBinary(string op)(auto ref const TVec4!T rhs) const
     {
-        TVector4!T ret;
+        TVec4!T ret;
 
         for(auto i = 0; i < 4; i++)
         {
@@ -123,9 +163,9 @@ struct TVector4(T)
             this.v = normalized().v;
         }
 
-        TVector4!T normalized() const
+        typeof(this) normalized() const
         {
-            TVector4!T ret;
+            TVec4!T ret;
             T lensq = this.dot(this);
             T invlen = 1.0f / sqrt(lensq);
 
@@ -136,14 +176,14 @@ struct TVector4(T)
             return ret;
         }
 
-        void project(ref const TVector4!T axis)
+        void project(ref const typeof(this) axis)
         {
             this.v = projected(axis).v;
         }
 
-        TVector4!T projected(ref const TVector4!T axis) const
+        typeof(this) projected(ref const typeof(this) axis) const
         {
-            TVector4!T ret;
+            TVec4!T ret;
             T numer = this.dot(axis);
             T denom = axis.dot(axis);
 
@@ -154,12 +194,12 @@ struct TVector4(T)
             return ret;
         }
 
-        void orth(ref const TVector4!T axis)
+        void orth(ref const typeof(this) axis)
         {
             this.v = this.orthed(axis).v;
         }
 
-        TVector4!T orthed(ref const TVector4!T axis) const
+        TVec4!T orthed(ref const typeof(this) axis) const
         {
             typeof(this) ret = (this - this.projected(axis));
             return ret;
@@ -172,14 +212,14 @@ struct TVector4(T)
     }
 }
 
-alias TVector4!float      Vector4;
-alias TVector4!uint     UIVector4;
-alias TVector4!int       IVector4;
-alias TVector4!ushort   UHVector4;
-alias TVector4!short     HVector4;
+alias TVec4!float      Vec4;
+alias TVec4!uint     UIVec4;
+alias TVec4!int       IVec4;
+alias TVec4!ushort   UHVec4;
+alias TVec4!short     HVec4;
 
 unittest{
     float[4] arr = [1,2,3,4];
 
-    Vector4 v = arr;
+    Vec4 v = arr;
 }

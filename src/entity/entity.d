@@ -60,8 +60,8 @@ abstract class Entity
 
     int type;
     float rotation;
-    Vector4 position;
-    Vector4 velocity;
+    Vec4 position;
+    Vec4 velocity;
 
     EntityInfo info;
     void *data; ///<type specific data
@@ -70,8 +70,8 @@ abstract class Entity
     {
         this.type = type;
         this.data = data;
-        position = Vector4(0,0,0,0);
-        velocity = Vector4(0,0,0,0);
+        position = Vec4(0,0,0,0);
+        velocity = Vec4(0,0,0,0);
         rotation = 0.0f;
         info = EntityInfo.get(type); 
 

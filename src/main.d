@@ -45,7 +45,6 @@ void init(int w, int h)
     glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
     glEnable(GL_SCISSOR_TEST);
     glEnable(GL_DEBUG_OUTPUT);
-    //glDepthFunc(GL_LEQUAL);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     glGenQueries(1, &primQuery);
@@ -53,7 +52,7 @@ void init(int w, int h)
     running = true;
 
     cam = new Camera();
-    cam.position = Vector4(0.0f, 3.5f, 0.0f, 0.0f);
+    cam.position = Vec4(0.0f, 3.5f, 0.0f, 0.0f);
 
     //TODO load tiles
     Tile[] tiles = new Tile[32 * 32];
@@ -91,6 +90,7 @@ void update()
     write("FPS: ", 1.0 / dt, "; TRIS: ", nprims, "       \r");
     stdout.flush();
 
+    hud_display.update(dt);
     Entity.updateAll(dt);
 }
 

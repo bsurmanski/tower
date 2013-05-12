@@ -21,6 +21,7 @@ immutable Api libactor = {
     [
         {"register", &libactor_register},
         {"new", &libactor_new},
+        {"focus", &libactor_focus},
         {"move", &libentity_move},
         {"moveTo", &libentity_moveTo},
     ],
@@ -33,9 +34,20 @@ int libactor_register(lua_State *l)
     string name    = table_get!string(l, 1, "Name", "");
     string desc    = table_get!string(l, 1, "Description", "");
     string texture = table_get!string(l, 1, "Sprite", "res/campaigns/main/items/unknown.tga");
-    bool isMain    = table_get!bool(l, 1, "Main", false);
-    ActorInfo info = new ActorInfo(name, desc, texture, isMain);
+    ActorInfo info = new ActorInfo(name, desc, texture);
     lua_pushinteger(l, info.id);
+    return 1;
+}
+
+int libactor_focus(lua_State *l)
+{
+    if(lua_isuserdata(l, 1))
+    {
+        Actor ent = cast(Actor) lua_touserdata(l, 1);
+        Actor.focus = ent;
+    }
+
+    lua_pushlightuserdata(l, cast(void*) Actor.focus);
     return 1;
 }
 
