@@ -7,11 +7,12 @@
 
 module math.vector;
 
+import std.conv;
 import std.stdio;
 import std.traits;
 import std.math;
 
-mixin template TVec(uint N, T)
+mixin template TVecN(uint N, T)
 {
     private:
     T v[N];
@@ -19,12 +20,21 @@ mixin template TVec(uint N, T)
     public:
 
     @property ref T[N] data() { return v; }
+    @property ref const(T[N]) data() const { return v; }
     @property uint size() { return N; }
     @property ref T x() { return v[0]; }
     @property ref T y() { return v[1]; }
 
-    alias Unqual!(typeof(this)) UTYPE;
+    alias TVECN = Unqual!(typeof(this));
 
+    static if(is(T == int)) //avoid recursive alias
+    {
+        alias IVECN = TVECN;
+    } else
+    {
+        mixin("alias IVECN = IVec"~to!string(N)~";");
+    }
+    
     static if(N >= 3)
     {
         @property ref T z() { return v[2]; }
@@ -49,9 +59,9 @@ mixin template TVec(uint N, T)
     }
     */
 
-    UTYPE opBinary(string op)(auto ref const T rhs) const
+    TVECN opBinary(string op)(auto ref const T rhs) const
     {
-        UTYPE ret;
+        TVECN ret;
 
         for(auto i = 0; i < N; i++)
         {
@@ -60,9 +70,9 @@ mixin template TVec(uint N, T)
         return ret;
     }
 
-    UTYPE opBinary(string op)(auto ref const UTYPE rhs) const
+    TVECN opBinary(string op)(auto ref const TVECN rhs) const
     {
-        UTYPE ret;
+        TVECN ret;
 
         for(auto i = 0; i < N; i++)
         {
@@ -70,6 +80,22 @@ mixin template TVec(uint N, T)
         }
 
         return ret;
+    }
+
+    void opOpAssign(string op)(auto ref const T rhs)
+    {
+        for(auto i = 0; i < N; i++)
+        {
+            mixin("v[i] = v[i]"~op~"rhs;");
+        }
+    }
+
+    void opOpAssign(string op)(auto ref const TVECN rhs)
+    {
+        for(auto i = 0; i < N; i++)
+        {
+            mixin("v[i] = v[i]"~op~"rhs.v[i];");
+        }
     }
 
     void opAssign(ref const T[] arr)
@@ -84,7 +110,12 @@ mixin template TVec(uint N, T)
         this.v = arr.dup;
     }
 
-    void opAssign(UTYPE rhs)
+    void opAssign(ref const TVECN rhs)
+    {
+        this.v = rhs.v.dup;
+    }
+
+    void opAssign(const TVECN rhs)
     {
         this.v = rhs.v.dup;
     }
@@ -99,7 +130,7 @@ mixin template TVec(uint N, T)
         return v[index];
     }
 
-    T dot(UTYPE rhs) const
+    T dot(TVECN rhs) const
     {
         T ret = 0;
         for(auto i = 0; i < N; i++)
@@ -109,11 +140,66 @@ mixin template TVec(uint N, T)
         return ret;
     }
 
+    TVECN map(T function(T) fn)
+    {
+        TVECN ret; 
+        for(int i = 0; i < N; i++)
+        {
+            ret[i] = fn(v[i]);
+        }
+        return ret;
+    }
+
     /**
      * floating point only operations
      */
     static if(is(T == float) || is(T == double))
     {
+        IVECN floor() const
+        {
+            IVECN ret;
+
+            for(int i = 0; i < N; i++)
+            {
+                ret[i] = to!int(std.math.floor(v[i]));
+            }
+            return ret;
+        }
+
+        IVECN ceil() const
+        {
+            IVECN ret;
+
+            for(int i = 0; i < N; i++)
+            {
+                ret[i] = to!int(std.math.ceil(v[i]));
+            }
+            return ret;
+        }
+
+        IVECN round() const
+        {
+            IVECN ret;
+
+            for(int i = 0; i < N; i++)
+            {
+                ret[i] = to!int(std.math.round(v[i]));
+            }
+            return ret;
+        }
+
+        T distance(const ref TVECN rhs) const
+        {
+            TVECN diff = this - rhs;
+            return diff.length();
+        }
+
+        T distanceSquared(const ref TVECN rhs) const
+        {
+            TVECN diff = this - rhs;
+            return diff.dot(diff);
+        }
+
         T length() const
         {
             return sqrt(this.dot(this));
@@ -124,9 +210,9 @@ mixin template TVec(uint N, T)
             this.v = normalized().v;
         }
 
-        UTYPE normalized() const
+        TVECN normalized() const
         {
-            UTYPE ret;
+            TVECN ret;
             T lensq = this.dot(this);
             T invlen = 1.0f / sqrt(lensq);
 
@@ -137,14 +223,14 @@ mixin template TVec(uint N, T)
             return ret;
         }
 
-        void project(ref const UTYPE axis)
+        void project(ref const TVECN axis)
         {
             this.v = projected(axis).v;
         }
 
-        UTYPE projected(ref const UTYPE axis) const
+        TVECN projected(ref const TVECN axis) const
         {
-            UTYPE ret;
+            TVECN ret;
             T numer = this.dot(axis);
             T denom = axis.dot(axis);
 
@@ -155,14 +241,14 @@ mixin template TVec(uint N, T)
             return ret;
         }
 
-        void orth(ref const UTYPE axis)
+        void orth(ref const TVECN axis)
         {
             this.v = this.orthed(axis).v;
         }
 
-        UTYPE orthed(ref const UTYPE axis) const
+        TVECN orthed(ref const TVECN axis) const
         {
-            UTYPE ret = (this - this.projected(axis));
+            TVECN ret = (this - this.projected(axis));
             return ret;
         }
     }
@@ -175,7 +261,7 @@ mixin template TVec(uint N, T)
 
 struct TVec2(T)
 {
-    mixin TVec!(2, T);
+    mixin TVecN!(2, T);
 
     this(T)(T x, T y)
     {
@@ -207,7 +293,7 @@ struct TVec2(T)
 
 struct TVec3(T)
 {
-    mixin TVec!(3, T);
+    mixin TVecN!(3, T);
 
     this(T)(T x, T y, T z)
     {
@@ -241,7 +327,7 @@ struct TVec3(T)
 
 struct TVec4(T)
 {
-    mixin TVec!(4, T);
+    mixin TVecN!(4, T);
 
     this(T)(T x, T y, T z, T w)
     {

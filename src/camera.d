@@ -21,7 +21,7 @@ class Camera
     Matrix4 _vmatrix;
     Matrix4 _pvmatrix;
 
-    Vec4 _position;
+    Vec3 _position;
 
     this()
     {
@@ -29,13 +29,13 @@ class Camera
     }
 
     @property
-    Vec4 position()
+    Vec3 position()
     {
         return _position;
     }
 
     @property 
-    void position(Vec4 newPosition)
+    void position(Vec3 newPosition)
     {
         _position = newPosition;
 

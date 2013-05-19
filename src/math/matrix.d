@@ -250,26 +250,26 @@ struct Matrix4
 /*{{{ Translate */
         void translate(float x, float y, float z)
         {
-            translate(Vec4(x, y, z, 0.0f));
+            translate(Vec3(x, y, z));
         }
 
-        void translate(Vec4 v)
+        void translate(Vec3 v)
         {
             this.v = (translated(v)).v;
         }
 
         typeof(this) translated(float x, float y, float z) const
         {
-            return translated(Vec4(x, y, z, 0.0f)); 
+            return translated(Vec3(x, y, z)); 
         }
 
-        typeof(this) translated(Vec4 v) const
+        typeof(this) translated(Vec3 v) const
         {
             Matrix4 tmat;
             tmat.v[WX] = v[0];
             tmat.v[WY] = v[1];
             tmat.v[WZ] = v[2];
-            tmat.v[WW] = 1.0f + v[3];
+            //tmat.v[WW] = 1.0f;
 
             return tmat * this;
         }

@@ -7,6 +7,7 @@
 
 module entity.actor;
 
+import std.algorithm;
 import std.stdio;
 import std.math;
 import std.conv;
@@ -26,9 +27,9 @@ import camera;
  */
 class ActorInfo : SpriteInfo
 {
-    this(string name, string description, string textureFilenm)
+    this(string name, string description, string spritesheet)
     {
-        super(name, description, textureFilenm);
+        super(name, description, spritesheet, 1, 2);
     }
 }
 
@@ -40,20 +41,28 @@ class Actor : Sprite
 {
     static Actor actorFocus = null;
 
-    ubyte selectedItem;
-    ubyte nitems;
-    uint healthmax;
-    uint health;
-    uint wealth;
+    ubyte _selectedItem;
+    ubyte _nitems;
+    uint _healthmax;
+    uint _health;
+    uint _wealthmax;
+    uint _wealth;
+
+    @property uint wealth() { return _wealth; }
+    @property void wealth(uint nwealth) { _wealth = min(_wealthmax, nwealth); }
+    @property ref uint health() { return _health; }
+    @property ref uint healthmax() { return _healthmax; }
+    @property ref ubyte selectedItem() { return _selectedItem; }
 
     this(int id)
     {
-        selectedItem = 0;
-        nitems = 0;
+        _selectedItem = 0;
+        _nitems = 0;
 
-        healthmax = 100;
-        health = 60;
-        wealth = 0;
+        _healthmax = 100;
+        _wealthmax = 100;
+        _health = 60;
+        _wealth = 0;
         super(id);
     }
 
@@ -69,7 +78,7 @@ class Actor : Sprite
 
     override void draw(Camera cam)
     {
-        cam.position = position + Vec4(0.0f, 3.5f, 5.0f, 0.0f);
+        cam.position = position + Vec3(0.0f, 3.5f, 5.0f);
         super.draw(cam);
     }
 
@@ -81,32 +90,29 @@ class Actor : Sprite
         {
             if(glfwGetKey('1'))
             {
-                selectedItem = 0;
+                _selectedItem = 0;
             }
 
             if(glfwGetKey('2'))
             {
-                selectedItem = 1;
+                _selectedItem = 1;
             }
 
             if(glfwGetKey('3'))
             {
-                selectedItem = 2;
+                _selectedItem = 2;
             }
 
             if(glfwGetKey('4'))
             {
-                selectedItem = 3;
+                _selectedItem = 3;
             }
 
-            if(glfwGetKey('W'))
-            {
-                position.z -= 0.05f;
-            }
-
+            frame = 0;
             if(glfwGetKey('A'))
             {
                 position.x -= 0.05f;
+                scale.x = -1;
             }
 
             if(glfwGetKey('S'))
@@ -117,6 +123,13 @@ class Actor : Sprite
             if(glfwGetKey('D'))
             {
                 position.x += 0.05f;
+                scale.x = 1;
+            }
+
+            if(glfwGetKey('W'))
+            {
+                position.z -= 0.05f;
+                frame = 1;
             }
         }
     }

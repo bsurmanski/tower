@@ -37,6 +37,7 @@ static int libitem_register(lua_State *l)
     string texture  =   table_get!string(l, 1, "Sprite", "res/campaigns/main/items/unknown.tga");
     string name     =   table_get!string(l, 1, "Name", "");
     string desc     =   table_get!string(l, 1, "Description", "");
+    void *hitCallback = table_get!(void*)(l, 1, "HitCallback", null);
 
     ItemInfo info = new ItemInfo(name, desc, texture); ///< automatically registers itself
     lua_pushinteger(l, info.id);

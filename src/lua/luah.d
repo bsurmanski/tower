@@ -71,9 +71,9 @@ if(is(T == void*))
 
     T ret = d;
     lua_getfield(l, table_index, field.toStringz());
-    if(lua_isuserdata(l, -1))
+    if(lua_isuserdata(l, -1) || lua_isfunction(l,-1))
     {
-        ret = cast(T) lua_touserdata(l, -1);
+        ret = cast(T) lua_topointer(l, -1);
     }
 
     lua_pop(l, 1);

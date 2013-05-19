@@ -17,6 +17,9 @@ SRC=src/main.d \
 	src/entity/sprite.d\
 	src/math/matrix.d\
 	src/math/vector.d\
+	src/math/bv/box.d\
+	src/math/bv/ball.d\
+	src/struct/geom/kdtree.d\
 	src/ui/component.d\
 	src/ui/glbComponent.d\
 	src/ui/imageComponent.d\

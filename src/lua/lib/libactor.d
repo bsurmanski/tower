@@ -33,8 +33,10 @@ int libactor_register(lua_State *l)
 {
     string name    = table_get!string(l, 1, "Name", "");
     string desc    = table_get!string(l, 1, "Description", "");
-    string texture = table_get!string(l, 1, "Sprite", "res/campaigns/main/items/unknown.tga");
-    ActorInfo info = new ActorInfo(name, desc, texture);
+    string spriteSheet = table_get!string(l, 1, "SpriteSheet", "res/campaigns/main/items/unknown.tga");
+    int sides = table_get!int(l, 1, "Sides", 1);
+    int frames = table_get!int(l, 1, "Frames", 1);
+    ActorInfo info = new ActorInfo(name, desc, spriteSheet);
     lua_pushinteger(l, info.id);
     return 1;
 }

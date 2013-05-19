@@ -40,19 +40,20 @@ void init(int w, int h)
     glfwSetWindowCloseCallback(&quit);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glEnable(GL_BLEND);
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
     glEnable(GL_SCISSOR_TEST);
     glEnable(GL_DEBUG_OUTPUT);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDepthFunc(GL_LEQUAL);
     
     glGenQueries(1, &primQuery);
 
     running = true;
 
     cam = new Camera();
-    cam.position = Vec4(0.0f, 3.5f, 0.0f, 0.0f);
+    cam.position = Vec3(0.0f, 3.5f, 0.0f);
 
     //TODO load tiles
     Tile[] tiles = new Tile[32 * 32];

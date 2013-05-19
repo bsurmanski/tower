@@ -3,7 +3,9 @@
 --
 
 MAIN_ACTOR = {
-    Sprite = ACTORS_FOLDER .. "/main/tash.tga",
+    SpriteSheet = ACTORS_FOLDER .. "/main/tash.tga",
+    Frames = 1,
+    Sides = 2,
     Name = "Tash",
     Description = "The main character!",
     Main = true,
