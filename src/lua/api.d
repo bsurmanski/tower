@@ -27,4 +27,5 @@ struct Api
     string name;
     LuaFunc[] functions;
     LuaConst[] constants;
+    Api *parent = null;
 }

@@ -16,8 +16,6 @@ immutable Api libitem = {
     [
         {"register", &libitem_register},
         {"new", &libitem_new},
-        {"move", &libentity_move},
-        {"moveTo", &libentity_moveTo},
     ],
     // constants
     [
@@ -25,7 +23,8 @@ immutable Api libitem = {
         {"Secondary",   LUA_TNUMBER, 1},
         {"Potion",      LUA_TNUMBER, 2},
         {"Misc",        LUA_TNUMBER, 3},
-    ]
+    ],
+    &libentity,
 };
 
 extern(C):

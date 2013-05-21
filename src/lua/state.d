@@ -60,14 +60,8 @@ class State
         lua_close(state);
     }
 
-    void register(ref Api api)
+    private void register(ref Api api, int tableindex)
     {
-        lua_newtable(state);
-        int tableindex = lua_gettop(state);
-        lua_pushstring(state, "__index");
-        lua_pushvalue(state, -2);
-        lua_settable(state, tableindex);
-
         foreach(func; api.functions)
         {
             lua_pushstring(state, func.name.toStringz());
@@ -99,6 +93,22 @@ class State
             }
             lua_settable(state, tableindex);
         }
+
+        if(api.parent)
+        {
+            register(*api.parent, tableindex);
+        }
+    }
+
+    void register(ref Api api)
+    {
+        lua_newtable(state);
+        int tableindex = lua_gettop(state);
+        lua_pushstring(state, "__index");
+        lua_pushvalue(state, -2);
+        lua_settable(state, tableindex);
+
+        register(api, tableindex);
 
         lua_setglobal(state, api.name.toStringz());
     }

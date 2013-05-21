@@ -20,6 +20,7 @@ immutable Api libentity = {
     [
         {"move", &libentity_move},
         {"moveTo", &libentity_moveTo},
+        {"info", &libentity_info},
     ],
     []
 };
@@ -75,4 +76,12 @@ int libentity_moveTo(lua_State *l)
         ent.position = offset;
     }
     return 0;
+}
+
+int libentity_info(lua_State *l)
+{
+    Entity ent = cast(Entity) lua_touserdata(l, 1);
+    lua_pushlightuserdata(l, cast(void*) ent.info);
+    lua_gettable(l, LUA_REGISTRYINDEX);
+    return 1;
 }

@@ -22,10 +22,9 @@ immutable Api libactor = {
         {"register", &libactor_register},
         {"new", &libactor_new},
         {"focus", &libactor_focus},
-        {"move", &libentity_move},
-        {"moveTo", &libentity_moveTo},
     ],
-    []
+    [],
+    &libentity,
 };
 
 extern (C):
