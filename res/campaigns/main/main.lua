@@ -14,6 +14,9 @@ mainActor = actor.new(MAIN);
 actor.focus(mainActor);
 actor.moveTo(mainActor, 0, 0, 0);
 
+secondActor = actor.new(MAIN);
+actor.moveTo(secondActor, 1, 0, 3);
+
 item.moveTo(item.new(GOLD), 0, 0, 5);
 item.moveTo(item.new(GOLD), 0, 0, 6);
 item.moveTo(item.new(GOLD), 2, 0, 6);

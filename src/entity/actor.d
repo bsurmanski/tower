@@ -78,7 +78,11 @@ class Actor : Sprite
 
     override void draw(Camera cam)
     {
-        cam.position = position + Vec3(0.0f, 3.5f, 5.0f);
+        if(this == focus) //TODO move to update. provide some way to get main camera from there
+        {
+            cam.position = position + Vec3(0.0f, 3.5f, 5.0f);
+        }
+
         super.draw(cam);
     }
 
