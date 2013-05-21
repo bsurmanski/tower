@@ -11,7 +11,7 @@ import entity.item;
 import lua.lib.libentity;
 
 immutable Api libitem = {
-    "item",
+    "Item",
     // functions
     [
         {"register", &libitem_register},
@@ -39,7 +39,13 @@ static int libitem_register(lua_State *l)
     string desc     =   table_get!string(l, 1, "Description", "");
     void *hitCallback = table_get!(void*)(l, 1, "HitCallback", null);
 
-    ItemInfo info = new ItemInfo(name, desc, texture); ///< automatically registers itself
+    ItemInfo info = new ItemInfo(l, name, desc, texture); ///< automatically registers itself
+
+    // add parameter table to registry (key of ActorInfo)
+    lua_pushlightuserdata(l, cast(void*) info);
+    lua_pushvalue(l, 1);
+    lua_settable(l, LUA_REGISTRYINDEX);
+
     lua_pushinteger(l, info.id);
     return 1;
 }
@@ -49,5 +55,9 @@ static int libitem_new(lua_State *l)
     int typeId = cast(int) lua_tointeger(l, 1);
     Item ent = new Item(typeId);
     lua_pushlightuserdata(l, cast(void*) ent);
+
+    int entindex = lua_gettop(l);
+    lua_getglobal(l, "Item"); //set metatable for actor
+    lua_setmetatable(l, entindex);
     return 1;
 }

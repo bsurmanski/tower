@@ -23,6 +23,7 @@ Map testmap = void;
 Camera cam;
 Hud hud_display;
 bool running;
+State state;
 
  
 
@@ -59,7 +60,7 @@ void init(int w, int h)
     Tile[] tiles = new Tile[32 * 32];
     testmap = Map(32, 32, tiles);
 
-    State state = new State();
+    state = new State();
     state.register(luaApis);
     state.run("res/default.lua");
 
@@ -95,6 +96,13 @@ void update()
     Entity.updateAll(dt);
 }
 
+void finalize()
+{
+    destroy(Entity.registry);
+    destroy(EntityInfo.registry);
+    glfwCloseWindow();
+}
+
 void main()
 {
     init(640, 480);
@@ -105,6 +113,4 @@ void main()
         draw();
         glEndQuery(GL_PRIMITIVES_GENERATED);
     }
-
-    glfwCloseWindow();
 }

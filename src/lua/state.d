@@ -64,6 +64,9 @@ class State
     {
         lua_newtable(state);
         int tableindex = lua_gettop(state);
+        lua_pushstring(state, "__index");
+        lua_pushvalue(state, -2);
+        lua_settable(state, tableindex);
 
         foreach(func; api.functions)
         {

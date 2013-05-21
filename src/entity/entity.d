@@ -10,6 +10,7 @@ module entity.entity;
 import std.math;
 import std.algorithm;
 
+import c.lua;
 import c.gl.gl;
 import gl.glb.glb;
 
@@ -27,12 +28,14 @@ abstract class EntityInfo
     static Texture shadow = void;
     static Sampler sampler = void;
 
+    lua_State *luastate = null;
     int id = -1;
     string name = "";
     string description = "";
 
-    this(string name, string description)
+    this(lua_State *l, string name, string description)
     {
+        this.luastate = l;
         this.name = name;
         this.description = description;
         this.id = cast(int) registry.length;
@@ -49,8 +52,16 @@ abstract class EntityInfo
         registry ~= this;
     }
 
+    ~this()
+    {
+        luastate = null;
+        destroy(name);
+        destroy(description);
+    }
+
     static EntityInfo get(int id)
     {
+        assert(id >= 0 && registry.length > id);
         return registry[id];
     }
 }
@@ -67,12 +78,10 @@ abstract class Entity
     Ball3 bounds;
 
     EntityInfo info;
-    void *data; ///<type specific data
 
-    this(int type, void *data = null)
+    this(int type)
     {
         this.type = type;
-        this.data = data;
         position = Vec3(0,0,0);
         velocity = Vec3(0,0,0);
         scale = Vec3(1,1,1);
@@ -82,6 +91,11 @@ abstract class Entity
         bounds.radius = 0.2;
 
         registry ~= this;
+    }
+
+    ~this()
+    {
+        info = null;
     }
 
     void draw(Camera cam);

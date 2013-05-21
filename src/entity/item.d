@@ -7,6 +7,7 @@
 
 module entity.item;
 
+import c.lua;
 import gl.glb.glb;
 
 import std.math;
@@ -22,9 +23,15 @@ class ItemInfo : SpriteInfo
     int type;
     Texture texture = void;
 
-    this(string name, string description, string textureFilenm)
+    this(lua_State *l, string name, string description, string textureFilenm)
     {
-        super(name, description, textureFilenm);
+        super(l, name, description, textureFilenm);
+    }
+
+    ~this()
+    {
+        destroy(texture);
+        texture = Texture.init;
     }
 }
 

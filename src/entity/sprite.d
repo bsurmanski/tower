@@ -11,6 +11,7 @@ import std.stdio;
 import std.math;
 import std.conv;
 
+import c.lua;
 import c.gl.glfw;
 import gl.glb.glb;
 
@@ -37,9 +38,9 @@ abstract class SpriteInfo : EntityInfo
         return _texture[frame + _frames * side];
     }
 
-    this(string name, string description, string textureFilenm)
+    this(lua_State *l, string name, string description, string textureFilenm)
     {
-        super(name, description);
+        super(l, name, description);
 
         _texture.length = 1;
         _texture[0] = new Texture(0, textureFilenm);
@@ -51,9 +52,9 @@ abstract class SpriteInfo : EntityInfo
         _height = _texture[0].height;
     }
 
-    this(string name, string description, string texture, int frames = 1, int sides = 1)
+    this(lua_State *l, string name, string description, string texture, int frames = 1, int sides = 1)
     {
-        super(name, description);
+        super(l, name, description);
 
         _frames = frames;
         _sides = sides;

@@ -12,9 +12,11 @@ import std.stdio;
 import std.math;
 import std.conv;
 
+import c.lua;
 import c.gl.glfw;
 import gl.glb.glb;
 
+import lua.lib.libentity;
 import entity.entity;
 import entity.sprite;
 import math.matrix;
@@ -27,9 +29,9 @@ import camera;
  */
 class ActorInfo : SpriteInfo
 {
-    this(string name, string description, string spritesheet)
+    this(lua_State *l, string name, string description, string spritesheet)
     {
-        super(name, description, spritesheet, 1, 2);
+        super(l, name, description, spritesheet, 1, 2);
     }
 }
 
@@ -136,5 +138,7 @@ class Actor : Sprite
                 frame = 1;
             }
         }
+
+        lua_update(this, dt);
     }
 }

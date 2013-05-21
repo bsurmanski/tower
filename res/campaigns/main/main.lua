@@ -10,14 +10,14 @@ ACTORS_FOLDER = CAMPAIGN_FOLDER .. "/actors"
 require(ITEMS_MODULE .. ".load");
 require(ACTORS_MODULE .. ".load");
 
-mainActor = actor.new(MAIN);
-actor.focus(mainActor);
-actor.moveTo(mainActor, 0, 0, 0);
+mainActor = Actor.new(MAIN);
+Actor.focus(mainActor);
+mainActor:moveTo(0, 0, 0);
 
-secondActor = actor.new(MAIN);
-actor.moveTo(secondActor, 1, 0, 3);
+secondActor = Actor.new(MAIN);
+secondActor:moveTo(1, 0, 3);
 
-item.moveTo(item.new(GOLD), 0, 0, 5);
-item.moveTo(item.new(GOLD), 0, 0, 6);
-item.moveTo(item.new(GOLD), 2, 0, 6);
-item.moveTo(item.new(GOLD), 6, 0, 6);
+Item.new(GOLD):moveTo(0, 0, 5);
+Item.new(GOLD):moveTo(0, 0, 6);
+Item.new(GOLD):moveTo(2, 0, 6);
+Item.new(GOLD):moveTo(6, 0, 6);
