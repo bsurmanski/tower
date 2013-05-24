@@ -16,7 +16,7 @@ import c.lua;
 import c.gl.glfw;
 import gl.glb.glb;
 
-import lua.lib.libentity;
+import lua.lib.callback;
 import entity.entity;
 import entity.sprite;
 import math.matrix;
@@ -29,9 +29,9 @@ import camera;
  */
 class ActorInfo : SpriteInfo
 {
-    this(lua_State *l, string name, string description, string spritesheet)
+    this(lua_State *l, string spritesheet)
     {
-        super(l, name, description, spritesheet, 1, 2);
+        super(l, spritesheet, 1, 2);
     }
 }
 
@@ -139,6 +139,9 @@ class Actor : Sprite
             }
         }
 
-        lua_update(this, dt);
+        //this.lib_call("Update", dt);
+        luaCallback("Update", dt);
     }
 }
+
+import lua.lib.libactor;

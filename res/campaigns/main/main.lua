@@ -13,6 +13,7 @@ require(ACTORS_MODULE .. ".load");
 mainActor = Actor.new(MAIN);
 Actor.focus(mainActor);
 mainActor:moveTo(0, 0, 0);
+mainActor:wealth();
 
 secondActor = Actor.new(MAIN);
 secondActor:moveTo(1, 0, 3);

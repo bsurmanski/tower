@@ -46,7 +46,7 @@ class HealthComponent : GlbComponent
 
     override void draw()
     {
-        bar.draw();
         frame.draw();
+        bar.draw();
     }
 }

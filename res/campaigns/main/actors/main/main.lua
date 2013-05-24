@@ -1,6 +1,7 @@
 --
 -- main actor 
 --
+--
 
 MAIN = Actor.register {
     SpriteSheet = ACTORS_FOLDER .. "/main/tash.tga",
@@ -8,9 +9,11 @@ MAIN = Actor.register {
     Sides = 2,
     Name = "Tash",
     Description = "The main character!",
-    Update = function(self, info, dt) 
+    Update = test,
+    Update = function(self, dt)
+        self:health(self.wealth);
         if(not (Actor.focus() == self)) then 
-            Actor.move(self, 0.1, 0, 0); 
+            Actor.move(self, 2 * dt, 0, 0); 
         end 
     end,
 };

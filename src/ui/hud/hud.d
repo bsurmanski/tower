@@ -15,6 +15,8 @@ import ui.hud.wealthComponent;
 import ui.component;
 import ui.imageComponent;
 
+import entity.actor;
+
 class Hud
 {
     Component components[];
@@ -35,17 +37,23 @@ class Hud
 
     void update(float dt)
     {
-        foreach(comp; components)
+        if(Actor.focus())
         {
-            comp.update(dt);
+            foreach(comp; components)
+            {
+                comp.update(dt);
+            }
         }
     }
 
     void draw()
     {
-        foreach(comp; components)
+        if(Actor.focus())
         {
-            comp.draw();
+            foreach(comp; components)
+            {
+                comp.draw();
+            }
         }
     }
 }

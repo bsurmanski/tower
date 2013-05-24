@@ -38,9 +38,9 @@ abstract class SpriteInfo : EntityInfo
         return _texture[frame + _frames * side];
     }
 
-    this(lua_State *l, string name, string description, string textureFilenm)
+    this(lua_State *l, string textureFilenm)
     {
-        super(l, name, description);
+        super(l);
 
         _texture.length = 1;
         _texture[0] = new Texture(0, textureFilenm);
@@ -52,9 +52,9 @@ abstract class SpriteInfo : EntityInfo
         _height = _texture[0].height;
     }
 
-    this(lua_State *l, string name, string description, string texture, int frames = 1, int sides = 1)
+    this(lua_State *l, string texture, int frames = 1, int sides = 1)
     {
-        super(l, name, description);
+        super(l);
 
         _frames = frames;
         _sides = sides;

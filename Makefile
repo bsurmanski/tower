@@ -8,9 +8,11 @@ SRC=src/main.d \
 	src/lua/state.d\
 	src/lua/table.d\
 	src/lua/lib/all.d\
+	src/lua/lib/callback.d\
 	src/lua/lib/libactor.d\
 	src/lua/lib/libentity.d\
 	src/lua/lib/libitem.d\
+	src/lua/lib/libkey.d\
 	src/entity/actor.d\
 	src/entity/entity.d\
 	src/entity/item.d\

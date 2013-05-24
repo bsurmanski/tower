@@ -14,6 +14,7 @@ import c.lua;
 import c.gl.gl;
 import gl.glb.glb;
 
+import lua.lib.callback;
 import math.bv.ball;
 import math.matrix;
 import math.vector;
@@ -30,14 +31,10 @@ abstract class EntityInfo
 
     lua_State *luastate = null;
     int id = -1;
-    string name = "";
-    string description = "";
 
-    this(lua_State *l, string name, string description)
+    this(lua_State *l)
     {
         this.luastate = l;
-        this.name = name;
-        this.description = description;
         this.id = cast(int) registry.length;
 
         if(!init)
@@ -55,8 +52,6 @@ abstract class EntityInfo
     ~this()
     {
         luastate = null;
-        destroy(name);
-        destroy(description);
     }
 
     static EntityInfo get(int id)
@@ -75,6 +70,7 @@ abstract class Entity
     Vec3 position;
     Vec3 scale;
     Vec3 velocity;
+    import math.bv.ball; //XXX WTF? why doesnt it know?
     Ball3 bounds;
 
     EntityInfo info;
@@ -91,6 +87,8 @@ abstract class Entity
         bounds.radius = 0.2;
 
         registry ~= this;
+
+        luaCallback("New");
     }
 
     ~this()
@@ -100,26 +98,31 @@ abstract class Entity
 
     void draw(Camera cam);
     void update(float dt);
+    //void input(
+    void collide(Entity other, float dt)
+    {
+        this.luaCallback("Collide", other, dt);
+    }
     
     static void updateAll(float dt)
     {
-        foreach(e; registry)
+        foreach(i, e; registry)
         {
             e.update(dt);
 
             ///XXX basic collision; TODO proper response
-            import entity.actor;
-            import std.stdio;
             e.bounds.center = e.position;
-            if(e == Actor.focus)
-            foreach(e2; registry)
+            for(auto j = 0; j < i; j++)
             {
-                if(e != e2 && e.bounds.collides(e2.bounds))
+                Entity e2 = registry[j];
+                if(e.bounds.collides(e2.bounds))
                 {
-                    Actor a = (cast(Actor)e);
-                    a.wealth = a.wealth + 1;
-                    writeln(a.wealth);
-                    e2.position = Vec3(0,0,0); 
+                    e.collide(e2, dt);
+                    e2.collide(e, dt);
+                    //Actor a = (cast(Actor)e);
+                    //a.wealth = a.wealth + 1;
+                    //writeln(a.wealth);
+                    //e2.position = Vec3(0,0,0); 
                 }
             }
         }
@@ -153,5 +156,11 @@ abstract class Entity
 
         glDepthMask(true);
         glEnable(GL_DEPTH_TEST);
+    }
+
+    void luaCallback(T...)(string name, T args)
+    {
+        lua_State *l = this.info.luastate; 
+        lua_callback(l, this.info, name, this, args);
     }
 }
