@@ -92,6 +92,7 @@ int libentity_info(lua_State *l)
 int libentity_destroy(lua_State *l)
 {
     Entity ent = cast(Entity) lua_touserdata(l, 1);
+    ent.marked = true;
     writeln("destroying...");
     return 0;
 }

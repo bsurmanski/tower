@@ -3,6 +3,7 @@ SRC=src/main.d \
 	src/keys.d\
 	src/map.d\
 	src/mesh.d\
+	src/container/list.d\
 	src/lua/api.d\
 	src/lua/luah.d\
 	src/lua/state.d\

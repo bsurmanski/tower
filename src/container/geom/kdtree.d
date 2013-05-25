@@ -5,7 +5,7 @@
  * Brandon Surmanski
  */
 
-module kdtree;
+module container.geom.kdtree;
 
 import std.math;
 

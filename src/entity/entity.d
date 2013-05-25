@@ -9,12 +9,15 @@ module entity.entity;
 
 import std.math;
 import std.algorithm;
+import std.container;
+import std.range;
 
 import c.lua;
 import c.gl.gl;
 import gl.glb.glb;
 
 import lua.lib.callback;
+import container.list;
 import math.bv.ball;
 import math.matrix;
 import math.vector;
@@ -63,8 +66,9 @@ abstract class EntityInfo
 
 abstract class Entity
 {
-    static Entity[] registry;
+    static List!Entity registry;
 
+    bool marked = false;
     int type;
     float rotation;
     Vec3 position;
@@ -86,7 +90,7 @@ abstract class Entity
 
         bounds.radius = 0.2;
 
-        registry ~= this;
+        registry.insertBack(this);
 
         luaCallback("New");
     }
@@ -106,27 +110,41 @@ abstract class Entity
     
     static void updateAll(float dt)
     {
-        foreach(i, e; registry)
+        foreach(e; registry)
         {
-            e.update(dt);
-
-            ///XXX basic collision; TODO proper response
-            e.bounds.center = e.position;
-            for(auto j = 0; j < i; j++)
+            if(!e.marked)
             {
-                Entity e2 = registry[j];
-                if(e.bounds.collides(e2.bounds))
+                e.update(dt);
+
+                e.bounds.center = e.position;
+                foreach(e2; registry)
                 {
-                    e.collide(e2, dt);
-                    e2.collide(e, dt);
-                    //Actor a = (cast(Actor)e);
-                    //a.wealth = a.wealth + 1;
-                    //writeln(a.wealth);
-                    //e2.position = Vec3(0,0,0); 
+                    if(e == e2) break;
+                    if(e.bounds.collides(e2.bounds) && !e2.marked)
+                    {
+                        e.collide(e2, dt);
+                        e2.collide(e, dt);
+                    }
                 }
             }
         }
-        sort!("a.position.z < b.position.z")(registry);
+
+        auto it = registry.begin();
+        while(it) // search for marked entities, and remove
+        {
+            if(it.value.marked)
+            {
+                destroy(it.value);
+                auto rmv = it;
+                it = it.next();
+                Entity ent = registry.remove(rmv); 
+            } else
+            {
+                it = it.next();
+            }
+        }
+
+        container.list.sort!("a.position.z < b.position.z")(registry);
     }
 
     static void drawAll(Camera cam)
