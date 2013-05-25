@@ -146,6 +146,66 @@ struct List(T)
         return ret;
     }
 
+    /**
+     * damn right bubble sort. The list should be mostly sorted anyways
+     */
+    void sort(alias less = "a < b")()
+    {
+        alias binaryFun!less lessFun;
+        bool sorted = false;
+
+        for(auto i = this.end(); i != this.begin() && !sorted; i = i.prev())
+        {
+            sorted = true;
+            for(auto j = this.begin(); j != i; j = j.next())
+            {
+                auto next = j.next();
+                if(lessFun(next.value, j.value))
+                {
+                    if(j == this._first)
+                    {
+                        this._first = next;
+                    }
+
+                    if(next == this._last)
+                    {
+                        this._last = j;
+                    }
+
+                    next.moveBefore(j); 
+
+
+                    if(next == i)
+                    {
+                        i = j;
+                    }
+
+                    j = next;
+
+                    sorted = false;
+                }
+            }
+        }
+    }
+
+    bool sorted(alias less = "a < b")()
+    {
+        alias binaryFun!less lessFun;
+
+        auto it = this.begin();
+        while(it)
+        {
+            import std.stdio;
+            if(it.next && lessFun(it.next.value, it.value))
+            {
+                return false;
+            }
+
+            it = it.next();
+        }
+        return true;
+    }
+
     struct Node(T)
     {
         Node!T *_prev = null;
@@ -236,41 +296,6 @@ struct List(T)
     }
 }
 
-/**
- * damn right bubble sort. The list should be mostly sorted anyways
- */
-void sort(alias less = "a < b", T)(ref List!T list)
-{
-    alias binaryFun!less lessFun;
-
-    bool sorted = false;
-    for(auto i = list.end(); i != list.begin() && !sorted; i = i.prev())
-    {
-        sorted = true;
-        for(auto j = list.begin(); j != i; j = j.next())
-        {
-            if(!j) break;
-            auto next = j.next();
-            if(lessFun(next._value, j._value))
-            {
-                if(j == list._first)
-                {
-                    list._first = next;
-                }
-
-                next.moveBefore(j); 
-
-                if(next == i)
-                {
-                    i = j;
-                }
-
-                j = next;
-                sorted = false;
-            }
-        }
-    }
-}
 
 unittest
 {
@@ -288,7 +313,7 @@ unittest
         assert(arr[i] == item); 
     }
 
-    sort(list);
+    list.sort();
     std.algorithm.sort(arr);
 
     foreach(item; list)

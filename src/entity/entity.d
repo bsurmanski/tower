@@ -144,7 +144,10 @@ abstract class Entity
             }
         }
 
-        container.list.sort!("a.position.z < b.position.z")(registry);
+        registry.sort!("a.position.z < b.position.z")();
+
+        // XXX DEBUG
+        assert(registry.sorted!("a.position.z < b.position.z")());
     }
 
     static void drawAll(Camera cam)
