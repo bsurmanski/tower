@@ -1,0 +1,19 @@
+#version 130
+
+uniform sampler2DArray inColor; 
+//uniform uint eid;
+
+smooth in vec4 f_pos;
+smooth in vec3 f_normal;
+smooth in vec2 f_uv;
+flat in int  f_material;
+
+//out uint frag_EntityID;
+/*layout(location = 0)*/ out vec4 outColor;
+/*layout(location = 1)*/ out vec4 outNormal; //TODO: requires "LAYOUT" keyword
+
+void main()
+{
+    outColor = texture(inColor, vec3(f_uv, f_material));
+    outNormal = vec4(normalize(f_normal), 1.0f);
+}

@@ -15,11 +15,11 @@ import c.lua;
 import c.gl.glfw;
 import gl.glb.glb;
 
+import container.geom.mesh;
 import entity.entity;
 import math.matrix;
 import math.vector;
 import camera;
-import mesh;
 
 /**
  * Represents shared data across an actor type. Kind of like a runtime class

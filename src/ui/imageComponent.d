@@ -10,7 +10,7 @@ module ui.imageComponent;
 import gl.glb.glb;
 
 import math.matrix;
-import mesh;
+import container.geom.mesh;
 import ui.component;
 import ui.glbComponent;
 

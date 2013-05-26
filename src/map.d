@@ -15,7 +15,8 @@ import gl.glb.texture;
 import c.gl.gl;
 import c.gl.glext;
 
-import mesh;
+import container.geom.mesh;
+import container.geom.grid;
 import camera;
 import math.matrix;
 
@@ -34,7 +35,7 @@ struct Map
     uint w;
     uint h;
 
-    Tile tiles[];
+    Grid!Tile tiles;
 
     Mesh mesh;
     Texture textureArray;
@@ -53,7 +54,7 @@ struct Map
 
         this.w = w;
         this.h = h;
-        this.tiles = tiles.dup;
+        this.tiles = Grid!Tile(w, h, tiles);//= tiles.dup;
         
         textureArray = Texture(Texture.RGBA, 16, 16, 16, 
                                    [
@@ -73,29 +74,29 @@ struct Map
              {
                 int index = (w * j + i);
                 int vindex = 4 * index;
-                float height = this.tiles[index].height / 8.0f;
+                float height = this.tiles[i, j].height / 8.0f;
                 verts[vindex] = Vertex([i - 0.5f, height, j - 0.5f],
                                            [0, short.max, 0],
                                            [0, 0], 
-                                           this.tiles[index].texture,
+                                           this.tiles[i, j].texture,
                                            [i, j]);
 
                 verts[vindex + 1] = Vertex([i - 0.5f, height, j + 0.5f],
                                           [0, short.max, 0],
                                           [0, ushort.max],
-                                          this.tiles[index].texture,
+                                          this.tiles[i, j].texture,
                                           [i, j]);
 
                 verts[vindex + 2] = Vertex([i + 0.5f, height, j + 0.5f],
                                            [0, short.max, 0],
                                            [ushort.max, ushort.max],
-                                           this.tiles[index].texture,
+                                           this.tiles[i, j].texture,
                                            [i, j]);
 
                 verts[vindex + 3] = Vertex([i + 0.5f, height, j - 0.5f],
                                            [0, short.max, 0],
                                            [ushort.max, 0],
-                                           this.tiles[index].texture,
+                                           this.tiles[i, j].texture,
                                            [i, j]);
              }
         }
@@ -118,8 +119,8 @@ struct Map
         }
 
         // add verts and faces to mesh
-        mesh.add(verts);
-        mesh.add(faces);
+        mesh ~= verts;
+        mesh ~= faces;
     }
 
     void draw(Camera cam)

@@ -9,10 +9,11 @@ import std.stdio;
 
 import lua.state;
 import lua.lib.all;
+import container.geom.mesh;
+import container.geom.model;
 import camera;
 import math.vector;
 import entity.entity;
-import mesh;
 import map;
 import ui.hud.hud;
 
@@ -24,6 +25,7 @@ Camera cam;
 Hud hud_display;
 bool running;
 State state;
+Model testmodel;
 
  
 
@@ -65,6 +67,8 @@ void init(int w, int h)
     state.run("res/default.lua");
 
     hud_display = new Hud();
+
+    testmodel = new Model([Mesh("res/mdl/column.mdl")], []);
 }
 
 void draw()
@@ -73,6 +77,8 @@ void draw()
     testmap.draw(cam);
     Entity.drawAll(cam);
     hud_display.draw();
+
+    testmodel.draw(cam);
     glfwSwapBuffers();
 }
 

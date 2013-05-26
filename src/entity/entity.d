@@ -17,12 +17,12 @@ import c.gl.gl;
 import gl.glb.glb;
 
 import lua.lib.callback;
+import container.geom.mesh;
 import container.list;
 import math.bv.ball;
 import math.matrix;
 import math.vector;
 import camera;
-import mesh;
 
 abstract class EntityInfo
 {

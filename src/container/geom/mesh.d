@@ -5,7 +5,7 @@
  * Brandon Surmanski
  */
 
-module mesh;
+module container.geom.mesh;
 
 import c.gl.glb.glb;
 import gl.glb.glb;
@@ -70,6 +70,77 @@ struct Mesh
     Buffer vbuffer;
     Buffer ibuffer;
 
+    this(const Vertex verts[])
+    {
+        ibuffer = Buffer.init;
+        vbuffer = Buffer.init;
+        add(verts);
+        if(verts.length) vdirty = true;
+        fdirty = false;
+    }
+
+    this(const Vertex verts[], const Face faces[])
+    {
+        ibuffer = Buffer.init;
+        vbuffer = Buffer.init;
+        add(verts);  
+        add(faces);
+
+        if(verts.length) vdirty = true;
+        if(faces.length) fdirty = true;
+    }
+
+    this(string filenm)
+    {
+        ibuffer = Buffer.init;
+        vbuffer = Buffer.init;
+        File file = File(filenm, "r"); 
+
+        Header header;
+        file.rawRead((&header)[0..1]);
+
+        verts.length = header.nverts;
+        faces.length = header.nfaces;
+        file.rawRead(verts); 
+        file.rawRead(faces);
+        file.close();
+
+        vdirty = true;
+        fdirty = true;
+    }
+
+    ~this(){}
+
+    void opOpAssign(string op)(const Face f[])
+    if(op == "~")
+    {
+        this.add(f); 
+    }
+
+    void opOpAssign(string op)(const Vertex v[])
+    if(op == "~")
+    {
+        this.add(v); 
+    }
+
+    void opOpAssign(string op)(const Face f)
+    if(op == "~")
+    {
+        this.add(f); 
+    }
+
+    void opOpAssign(string op)(const Vertex v)
+    if(op == "~")
+    {
+        this.add(v); 
+    }
+
+    void opOpAssign(string op)(const Mesh m)
+    if(op == "~")
+    {
+        this.add(m); 
+    }
+
     /**
      * adds a set of faces to this mesh
      */
@@ -122,46 +193,6 @@ struct Mesh
         vdirty = true;
     }
 
-    this(const Vertex verts[])
-    {
-        ibuffer = Buffer.init;
-        vbuffer = Buffer.init;
-        add(verts);
-        if(verts.length) vdirty = true;
-        fdirty = false;
-    }
-
-    this(const Vertex verts[], const Face faces[])
-    {
-        ibuffer = Buffer.init;
-        vbuffer = Buffer.init;
-        add(verts);  
-        add(faces);
-
-        if(verts.length) vdirty = true;
-        if(faces.length) fdirty = true;
-    }
-
-    this(string filenm)
-    {
-        ibuffer = Buffer.init;
-        vbuffer = Buffer.init;
-        File file = File(filenm, "r"); 
-
-        Header header;
-        file.rawRead((&header)[0..1]);
-
-        verts.length = header.nverts;
-        faces.length = header.nfaces;
-        file.rawRead(verts); 
-        file.rawRead(faces);
-        file.close();
-
-        vdirty = true;
-        fdirty = true;
-    }
-
-    ~this(){}
 
     void setName(string str)
     in {
