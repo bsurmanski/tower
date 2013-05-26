@@ -295,29 +295,3 @@ struct List(T)
         }
     }
 }
-
-
-unittest
-{
-    import std.stdio;
-
-    List!int list;
-    int[] arr = [5, 22, 1, 44, 555, 2];
-    foreach(a; arr)
-    {
-        list ~= a;
-    }
-
-    foreach(i, item; list)
-    {
-        assert(arr[i] == item); 
-    }
-
-    list.sort();
-    std.algorithm.sort(arr);
-
-    foreach(item; list)
-    {
-        writeln(item); 
-    }
-}
