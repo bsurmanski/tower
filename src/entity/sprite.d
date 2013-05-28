@@ -17,6 +17,7 @@ import gl.glb.glb;
 
 import container.geom.mesh;
 import entity.entity;
+import entity.luaEntity;
 import math.matrix;
 import math.vector;
 import camera;
@@ -25,7 +26,7 @@ import camera;
  * Represents shared data across an actor type. Kind of like a runtime class
  * templated usable by lua.
  */
-abstract class SpriteInfo : EntityInfo
+abstract class SpriteInfo : LuaEntityInfo
 {
     Texture *_texture[]; 
     int _frames;
@@ -86,7 +87,7 @@ abstract class SpriteInfo : EntityInfo
  * an Actor is any character that has a 'personality'. Anything that moves,
  * talks, attacks etc.
  */
-abstract class Sprite : Entity
+abstract class Sprite : LuaEntity
 {
     static bool init = false;
     static Program program;
@@ -121,9 +122,17 @@ abstract class Sprite : Entity
         mat.scale(scale.x, scale.y, scale.z);
         mat.translate(this.position);
 
+        Matrix4 dmat;
+        dmat.translate(0, 1, 0); //center sprite at bottom
+        //dmat.rotate(-PI / 4.0f, 1.0f, 0, 0); //face sprite towards screen
+        dmat.scale(sinfo._width / 32.0f, sinfo._height / 32.0f, sinfo._height / 32.0f, 1.0f);
+        dmat.scale(scale.x, scale.y, scale.z);
+        dmat.translate(this.position);
+        dmat = cam.getMatrix() * dmat;
 
         mat = cam.getMatrix() * mat;
         program.uniform(Shader.VERTEX_SHADER, 0, (float[16]).sizeof, true, mat.ptr);
+        program.uniform(Shader.VERTEX_SHADER, 1, (float[16]).sizeof, true, dmat.ptr);
         program.texture(Shader.FRAGMENT_SHADER, 0, *sinfo.getTexture(0, _frame));
         program.draw(Mesh.getUnitQuad().getVertexBuffer());
     }

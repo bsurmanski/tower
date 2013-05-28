@@ -56,7 +56,7 @@ void init(int w, int h)
     running = true;
 
     cam = new Camera();
-    cam.position = Vec3(0.0f, 3.5f, 0.0f);
+    //cam.position = Vec3(0.0f, 1.5f, 0.0f);
 
     //TODO load tiles
     Tile[] tiles = new Tile[32 * 32];

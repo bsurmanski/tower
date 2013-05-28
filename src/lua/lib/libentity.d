@@ -11,6 +11,7 @@ import std.stdio;
 import c.lua;
 
 import math.vector;
+import entity.luaEntity;
 import entity.entity;
 import lua.api;
 import lua.luah;
@@ -28,7 +29,7 @@ immutable Api libentity = {
 
 //TODO: messy!
 void lua_push(T)(lua_State *l, T value)
-if(is(Entity == T))
+if(is(Entity == T) || is(LuaEntity == T)) //TODO: change to all classes dirived from Entity
 {
     import entity.actor;
     import entity.item;

@@ -325,6 +325,25 @@ struct Matrix4
         }
 /*}}}*/
 
+/*{{{ Skew*/
+
+        void skewy(float angle)
+        {
+            this.v = this.skewedy(angle).v;
+        }
+
+        Matrix4 skewedy(float angle)
+        {
+            Matrix4 m =[1, 0,          0, 0,
+                        0, 1,          0, 0,
+                        0, tan(angle), 1, 0,
+                        0, 0,          0, 1,];
+
+            return m * this;
+        }
+
+/*}}}*/
+
         void print()
         {
             writeln("[", v[XX], ", ", v[YX], ", ", v[ZX], ", ", v[WX]); 

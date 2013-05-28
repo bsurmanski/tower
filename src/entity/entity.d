@@ -12,11 +12,9 @@ import std.algorithm;
 import std.container;
 import std.range;
 
-import c.lua;
 import c.gl.gl;
 import gl.glb.glb;
 
-import lua.lib.callback;
 import container.geom.mesh;
 import container.list;
 import math.bv.ball;
@@ -32,12 +30,10 @@ abstract class EntityInfo
     static Texture shadow = void;
     static Sampler sampler = void;
 
-    lua_State *luastate = null;
     int id = -1;
 
-    this(lua_State *l)
+    this()
     {
-        this.luastate = l;
         this.id = cast(int) registry.length;
 
         if(!init)
@@ -53,9 +49,7 @@ abstract class EntityInfo
     }
 
     ~this()
-    {
-        luastate = null;
-    }
+    {}
 
     static EntityInfo get(int id)
     {
@@ -74,7 +68,6 @@ abstract class Entity
     Vec3 position;
     Vec3 scale;
     Vec3 velocity;
-    import math.bv.ball; //XXX WTF? why doesnt it know?
     Ball3 bounds;
 
     EntityInfo info;
@@ -92,7 +85,6 @@ abstract class Entity
 
         registry.insertBack(this);
 
-        luaCallback("New");
     }
 
     ~this()
@@ -102,11 +94,8 @@ abstract class Entity
 
     void draw(Camera cam);
     void update(float dt);
+    void collide(Entity other, float dt);
     //void input(
-    void collide(Entity other, float dt)
-    {
-        this.luaCallback("Collide", other, dt);
-    }
     
     static void updateAll(float dt)
     {
@@ -179,9 +168,4 @@ abstract class Entity
         glEnable(GL_DEPTH_TEST);
     }
 
-    void luaCallback(T...)(string name, T args)
-    {
-        lua_State *l = this.info.luastate; 
-        lua_callback(l, this.info, name, this, args);
-    }
 }

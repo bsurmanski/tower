@@ -139,9 +139,6 @@ class Actor : Sprite
             }
         }
 
-        //this.lib_call("Update", dt);
-        luaCallback("Update", dt);
+        super.update(dt);
     }
 }
-
-import lua.lib.libactor;

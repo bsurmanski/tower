@@ -18,7 +18,9 @@ SRC=src/main.d \
 	src/lua/lib/libkey.d\
 	src/entity/actor.d\
 	src/entity/entity.d\
+	src/entity/luaEntity.d\
 	src/entity/item.d\
+	src/entity/modelEntity.d\
 	src/entity/sprite.d\
 	src/math/matrix.d\
 	src/math/vector.d\
