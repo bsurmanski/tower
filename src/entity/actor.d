@@ -58,6 +58,8 @@ class Actor : Sprite
 
     this(int id)
     {
+        super(id);
+
         _selectedItem = 0;
         _nitems = 0;
 
@@ -65,7 +67,6 @@ class Actor : Sprite
         _wealthmax = 100;
         _health = 60;
         _wealth = 0;
-        super(id);
     }
 
     @property static void focus(Actor a)

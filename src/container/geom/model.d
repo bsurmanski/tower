@@ -22,17 +22,20 @@ class Model
     //XXX
     static Program program;
     static Sampler sampler = void;
+    //
 
     this(Mesh meshes[], Texture textures[])
     {
         _meshes = meshes.dup; 
         _textures = textures.dup;
 
+        //
         sampler = Sampler();
         sampler.setFilter(Sampler.NEAREST, Sampler.NEAREST);
         program = Program();
         program.source("res/glsl/drawmodel.vs", Shader.VERTEX_SHADER);
         program.source("res/glsl/drawmodel.fs", Shader.FRAGMENT_SHADER);
+        //
     }
 
     void opOpAssign(string op)(const Mesh mesh)
@@ -46,6 +49,7 @@ class Model
         _textures ~= texture;
     }
 
+    ///
     void draw(Camera cam)
     {
         // okay, everything is all slanty!
@@ -58,4 +62,5 @@ class Model
             program.draw(mesh.getVertexBuffer(), mesh.getIndexBuffer());
         }
     }
+    ////
 }

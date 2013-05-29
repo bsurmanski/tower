@@ -26,30 +26,34 @@ abstract class EntityInfo
 {
     static EntityInfo[] registry;
 
-    static bool init = false;
-    static Texture shadow = void;
-    static Sampler sampler = void;
+    static bool _entityinit = false;
+    static Texture _shadow = void;
+    static Sampler _sampler = void;
 
-    int id = -1;
+    int _id = -1;
+
+    @property int id() { return _id; }
 
     this()
     {
-        this.id = cast(int) registry.length;
+        this._id = cast(int) registry.length;
 
-        if(!init)
+        if(!_entityinit)
         {
-            init = true;
-            sampler = Sampler();
-            sampler.setFilter(Sampler.NEAREST, Sampler.NEAREST);
-            shadow = Texture(0, "res/tex/shadow.tga");
-            shadow.setSampler(&sampler);
+            _entityinit = true;
+            _sampler = Sampler();
+            _sampler.setFilter(Sampler.NEAREST, Sampler.NEAREST);
+            _shadow = Texture(0, "res/tex/shadow.tga");
+            _shadow.setSampler(&_sampler);
         }
 
         registry ~= this;
     }
 
     ~this()
-    {}
+    {
+        _id = -1;
+    }
 
     static EntityInfo get(int id)
     {
@@ -154,14 +158,14 @@ abstract class Entity
 
         Matrix4 mat; 
         mat.rotate(-PI / 2.0f, 1.0f, 0.0f, 0.0f);
-        const(int) *texturesz = info.shadow.size();
+        const(int) *texturesz = info._shadow.size();
         mat.scale(texturesz[0] / 32.0f, texturesz[1] / 32.0f, texturesz[1] / 32.0f);
         mat.translate(this.position);
 
         mat = cast(Matrix4) cam.getMatrix() * mat;
        
         program.uniform(Shader.VERTEX_SHADER, 0, (float[16]).sizeof, true, mat.ptr);
-        program.texture(Shader.FRAGMENT_SHADER, 0, info.shadow);
+        program.texture(Shader.FRAGMENT_SHADER, 0, info._shadow);
         program.draw(Mesh.getUnitQuad().getVertexBuffer());
 
         glDepthMask(true);

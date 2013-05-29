@@ -10,12 +10,13 @@ import std.stdio;
 import lua.state;
 import lua.lib.all;
 import container.geom.mesh;
-import container.geom.model;
-import camera;
 import math.vector;
+import math.matrix;
 import entity.entity;
-import map;
+import entity.modelEntity;
 import ui.hud.hud;
+import map;
+import camera;
 
 GLuint primQuery;
 Buffer buffer = void;
@@ -25,8 +26,7 @@ Camera cam;
 Hud hud_display;
 bool running;
 State state;
-Model testmodel;
-
+ModelEntity testmodel;
  
 
 extern (C) int quit()
@@ -43,7 +43,6 @@ void init(int w, int h)
     glfwSetWindowCloseCallback(&quit);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glEnable(GL_BLEND);
-    //glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
     glEnable(GL_SCISSOR_TEST);
@@ -68,7 +67,9 @@ void init(int w, int h)
 
     hud_display = new Hud();
 
-    testmodel = new Model([Mesh("res/mdl/column.mdl")], []);
+    
+    auto minfo = new ModelInfo(state.state, "res/mdl/column.mdl", "res/tex/test2.tga");
+    testmodel = new ModelEntity(minfo.id);
 }
 
 void draw()

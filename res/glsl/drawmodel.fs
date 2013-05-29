@@ -1,6 +1,6 @@
 #version 130
 
-uniform sampler2DArray inColor; 
+uniform sampler2D inColor; 
 //uniform uint eid;
 
 smooth in vec4 f_pos;
@@ -14,6 +14,6 @@ flat in int  f_material;
 
 void main()
 {
-    outColor = texture(inColor, vec3(f_uv, f_material));
+    outColor = texture(inColor, f_uv);
     outNormal = vec4(normalize(f_normal), 1.0f);
 }

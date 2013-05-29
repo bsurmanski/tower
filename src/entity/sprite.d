@@ -45,7 +45,7 @@ abstract class SpriteInfo : LuaEntityInfo
 
         _texture.length = 1;
         _texture[0] = new Texture(0, textureFilenm);
-        _texture[0].setSampler(&sampler);
+        _texture[0].setSampler(&_sampler);
 
         _frames = 1;
         _sides = 1;
@@ -77,7 +77,7 @@ abstract class SpriteInfo : LuaEntityInfo
                 _texture[i] = new Texture(0, Texture.RGBA, _width, _height, 1, null);
                 _texture[i].copy(master, 0, 0, [frame * _width, side * _height, 1],
                                  [0,0,0],[_width, _height, 1]);
-                _texture[i].setSampler(&sampler);
+                _texture[i].setSampler(&_sampler);
             }
         }
     }

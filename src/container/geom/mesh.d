@@ -10,6 +10,7 @@ module container.geom.mesh;
 import c.gl.glb.glb;
 import gl.glb.glb;
 
+import math.matrix;
 import std.file;
 import std.stdio;
 import std.conv;
@@ -191,6 +192,20 @@ struct Mesh
         }
         fdirty = true;
         vdirty = true;
+    }
+
+    void transform(Matrix4 matrix)
+    {
+            writeln(matrix);
+        foreach(ref v; verts)
+        {
+            import math.vector;
+            writeln(v.position);
+            v.position = 
+                (matrix * Vec4([v.position[0], v.position[1], v.position[2], 1.0f])).data[0..3].dup;
+            //v.normal = (matrix * [v.normal[0], v.normal[1], v.normal[2], 0.0f])[0..4];
+            //TODO: normal (note: normal is packed as short)
+        }
     }
 
 

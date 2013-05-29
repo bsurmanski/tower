@@ -42,8 +42,8 @@ class Item : Sprite
         super(id);
     }
 
-    override void update(float dt)
+    /*override void update(float dt)
     {
     
-    }
+    }*/
 }
