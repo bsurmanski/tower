@@ -26,7 +26,6 @@ Camera cam;
 Hud hud_display;
 bool running;
 State state;
-ModelEntity testmodel;
  
 
 extern (C) int quit()
@@ -66,10 +65,6 @@ void init(int w, int h)
     state.run("res/default.lua");
 
     hud_display = new Hud();
-
-    
-    auto minfo = new ModelInfo(state.state, "res/mdl/column.mdl", "res/tex/test2.tga");
-    testmodel = new ModelEntity(minfo.id);
 }
 
 void draw()
@@ -79,7 +74,6 @@ void draw()
     Entity.drawAll(cam);
     hud_display.draw();
 
-    testmodel.draw(cam);
     glfwSwapBuffers();
 }
 

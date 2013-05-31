@@ -4,7 +4,7 @@
 --
 
 MAIN = Actor.register {
-    SpriteSheet = ACTORS_FOLDER .. "/main/tash.tga",
+    SpriteSheet = ENT_FOLDER .. "/main/tash.tga",
     Frames = 1,
     Sides = 2,
     Name = "Tash",

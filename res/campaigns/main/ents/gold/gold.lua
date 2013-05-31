@@ -5,7 +5,7 @@
 GOLD_ITEM = {
     Type = Item.Misc, 
     Autopickup = true,
-    Sprite = ITEMS_FOLDER .. "/gold/gold.tga",
+    Sprite = ENT_FOLDER .. "/gold/gold.tga",
     Name = "Gold",
     Description = "Yarrr, delicious gold",
     Collide = function(self, other, dt)

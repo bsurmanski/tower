@@ -14,6 +14,7 @@ SRC=src/main.d \
 	src/lua/lib/callback.d\
 	src/lua/lib/libactor.d\
 	src/lua/lib/libentity.d\
+	src/lua/lib/libmodel.d\
 	src/lua/lib/libitem.d\
 	src/lua/lib/libkey.d\
 	src/entity/actor.d\

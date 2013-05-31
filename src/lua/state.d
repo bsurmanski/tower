@@ -42,7 +42,8 @@ class State
         lua_getinfo(l, ">nSl".toStringz(), &ar);
         string panicStr = to!string(lua_tostring(l, lua_gettop(l)));
         string srcStr = to!string(ar.source);
-        writeln("Lua Panic: ", panicStr , ":", ar.currentline, ", ", srcStr);
+        string nameStr = to!string(ar.name);
+        writeln("Lua Panic: ", panicStr , " :", nameStr, ": ", ar.currentline, ", ", srcStr);
         return 0;
     }
 
