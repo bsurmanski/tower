@@ -10,6 +10,7 @@ module lua.lib.libkey;
 import c.lua;
 import lua.api;
 import lua.luah;
+import keys;
 
 immutable Api libkey =
 {
@@ -18,7 +19,7 @@ immutable Api libkey =
         {"bind", &libkey_bind},
         {"setEnable", &libkey_setEnable},
     ],
-    [],//keyConsts 
+    keyConsts 
 };
 
 extern(C):
@@ -37,9 +38,28 @@ int libkey_bind(lua_State *l)
     return 0;
 }
 
+enum
+{
+    GAME_PAUSE,
+    GAME_SELECT,
+    GAME_CANCEL,
+    GAME_UP,
+    GAME_DOWN,
+    GAME_LEFT,
+    GAME_RIGHT,
+    ACTOR_MOVE_UP,
+    ACTOR_MOVE_DOWN,
+    ACTOR_MOVE_LEFT,
+    ACTOR_MOVE_RIGHT,
+    ACTOR_JUMP,
+    ACTOR_MAIN_ATTACK,
+    ACTOR_SECONDARY_ATTACK,
+    ACTOR_DRINK_POTION,
+    ACTOR_NEXT_ITEM,
+    ACTOR_PREV_ITEM,
+}
 
-/*
-static LuaConst keyConsts[] =
+static immutable LuaConst keyConsts[] =
 [
     {"PAUSE", LUA_TNUMBER, GAME_PAUSE},
     {"MENU_SELECT", LUA_TNUMBER, GAME_SELECT},
@@ -58,6 +78,6 @@ static LuaConst keyConsts[] =
     {"DRINK_POTION", LUA_TNUMBER, ACTOR_DRINK_POTION},
     {"NEXT_ITEM", LUA_TNUMBER, ACTOR_NEXT_ITEM},
     {"PREV_ITEM", LUA_TNUMBER, ACTOR_PREV_ITEM},
-];*/
+];
 
 

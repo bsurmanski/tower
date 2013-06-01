@@ -26,8 +26,8 @@ extern(C):
 
 static int libmodel_register(lua_State *l)
 {
-    string model    =   table_get!string(l, 1, "Model", "");
-    string texture  =   table_get!string(l, 1, "Texture", "res/campaigns/main/items/unknown.tga");
+    string model    =   table_getstring(l, 1, "Model", "");
+    string texture  =   table_getstring(l, 1, "Texture", "res/campaigns/main/items/unknown.tga");
 
     ModelInfo info = new ModelInfo(l, model, texture); ///< automatically registers itself
 

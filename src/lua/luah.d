@@ -86,7 +86,7 @@ if(is(T == class))
  */
 
 void lua_push(T)(lua_State *l, T value)
-if(isPointer!T)
+if(is(T == void*))
 {
     lua_pushlightuserdata(l, value);
 }
@@ -142,6 +142,27 @@ T table_get(T)(lua_State *l, int table_index, string field, T d)
     lua_pop(l, 1);
     return ret;
 } 
+
+T table_get(K, T)(lua_State *l, int table_index, K key, T d)
+{
+    if(!lua_istable(l, table_index)) return d;
+    T ret = d;
+    lua_push(l, key);
+    lua_gettable(l, table_index);
+    if(lua_is!T(l, -1))
+    {
+        ret = lua_to!T(l, -1);
+    }
+    lua_pop(l, 1);
+    return ret;
+}
+
+void table_set(K, T)(lua_State *l, int table_index, K key, T value)
+{
+    lua_push(l, key);
+    lua_push(l, value);
+    lua_settable(l, table_index);
+}
 
 alias table_get!string table_getstring;
 alias table_get!int    table_getinteger;

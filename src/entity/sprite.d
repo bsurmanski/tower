@@ -75,7 +75,7 @@ abstract class SpriteInfo : LuaEntityInfo
             {
                 uint i = frame + _frames * (_sides - side - 1); // reading is from bottom?
                 _texture[i] = new Texture(0, Texture.RGBA, _width, _height, 1, null);
-                _texture[i].copy(master, 0, 0, [frame * _width, side * _height, 1],
+                _texture[i].copy(master, 0, 0, [frame * _width, side * _height, 0],
                                  [0,0,0],[_width, _height, 1]);
                 _texture[i].setSampler(&_sampler);
             }

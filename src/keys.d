@@ -60,7 +60,7 @@ struct Keys
 
     bool isPressed(int action)
     {
-        return false; 
+        return cast(bool) glfwGetKey(getKeyBinding(action));
     }
 
     uint getKeyBinding(uint action)

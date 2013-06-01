@@ -12,6 +12,7 @@ import lua.lib.libactor;
 import lua.lib.libitem;
 import lua.lib.libmodel;
 import lua.lib.libkey;
+import lua.lib.libvector;
 
 static Api[] luaApis = [
     libentity,
@@ -19,6 +20,7 @@ static Api[] luaApis = [
     libitem,
     libmodel,
     libkey,
+    libvector,
 ];
 
 

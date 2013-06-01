@@ -11,9 +11,9 @@ CAMPAIGN_MAIN = CAMPAIGN_MODULE .. "." .. MAIN
 
 items = {}
 
---key.bind(key.UP,    string.byte('W'));
---key.bind(key.DOWN,  string.byte('S'));
---key.bind(key.LEFT,  string.byte('A'));
---key.bind(key.RIGHT, string.byte('D'));
+Key.bind(Key.UP,    string.byte('W'));
+Key.bind(Key.DOWN,  string.byte('S'));
+Key.bind(Key.LEFT,  string.byte('A'));
+Key.bind(Key.RIGHT, string.byte('D'));
 
 require(CAMPAIGN_MAIN);

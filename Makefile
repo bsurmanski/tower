@@ -14,9 +14,12 @@ SRC=src/main.d \
 	src/lua/lib/callback.d\
 	src/lua/lib/libactor.d\
 	src/lua/lib/libentity.d\
+	src/lua/lib/libentity_tmpl.d\
 	src/lua/lib/libmodel.d\
 	src/lua/lib/libitem.d\
 	src/lua/lib/libkey.d\
+	src/lua/lib/libvector.d\
+	src/lua/lib/libvector_tmpl.d\
 	src/entity/actor.d\
 	src/entity/entity.d\
 	src/entity/luaEntity.d\
@@ -34,6 +37,7 @@ SRC=src/main.d \
 	src/ui/hud/itemSelectComponent.d\
 	src/ui/hud/healthComponent.d\
 	src/ui/hud/wealthComponent.d\
+	src/ui/font.d\
 	/usr/local/include/d/gl/glb/*.d \
 	/usr/local/include/d/c/*.d
 

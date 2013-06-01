@@ -10,6 +10,8 @@ module lua.lib.libentity;
 import std.stdio;
 import c.lua;
 
+import lua.lib.libvector_tmpl;
+import lua.lib.libentity_tmpl;
 import math.vector;
 import entity.luaEntity;
 import entity.entity;
@@ -23,32 +25,10 @@ immutable Api libentity = {
         {"moveTo", &libentity_moveTo},
         {"info", &libentity_info},
         {"destroy", &libentity_destroy},
+        {"position", &libentity_position},
     ],
     []
 };
-
-//TODO: messy!
-void lua_push(T)(lua_State *l, T value)
-if(is(Entity == T) || is(LuaEntity == T)) //TODO: change to all classes dirived from Entity
-{
-    import entity.actor;
-    import entity.item;
-    lua_pushlightuserdata(l, cast(void*) value);
-    if(cast(Actor) value)
-    {
-        lua_getglobal(l, "Actor");
-        lua_setmetatable(l, -2);
-    } else if(cast(Item) value)
-    {
-        lua_getglobal(l, "Item");
-        lua_setmetatable(l, -2);
-    } else
-    {
-        lua_getglobal(l, "Entity");
-        lua_setmetatable(l, -2);
-    }
-}
-
 
 extern (C):
 
@@ -80,6 +60,19 @@ int libentity_moveTo(lua_State *l)
         ent.position = offset;
     }
     return 0;
+}
+
+int libentity_position(lua_State *l)
+{
+    Entity ent = cast(Entity) lua_touserdata(l, 1);
+    if(lua_isuserdata(l, 2))
+    {
+        Vec3 *newpos = cast(Vec3*) lua_touserdata(l, 2);
+        ent.position = *newpos;
+    }
+    //TODO
+    lua_push(l, &ent.position);
+    return 1;
 }
 
 int libentity_info(lua_State *l)

@@ -116,24 +116,24 @@ class Actor : Sprite
             }
 
             frame = 0;
-            if(glfwGetKey('A'))
+            if(glfwGetKey(GLFW_KEY_LEFT))
             {
                 position.x -= 0.05f;
                 scale.x = -1;
             }
 
-            if(glfwGetKey('S'))
+            if(glfwGetKey(GLFW_KEY_DOWN))
             {
                 position.z += 0.05f;
             }
 
-            if(glfwGetKey('D'))
+            if(glfwGetKey(GLFW_KEY_RIGHT))
             {
                 position.x += 0.05f;
                 scale.x = 1;
             }
 
-            if(glfwGetKey('W'))
+            if(glfwGetKey(GLFW_KEY_UP))
             {
                 position.z -= 0.05f;
                 frame = 1;

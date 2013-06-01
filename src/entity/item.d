@@ -23,9 +23,9 @@ class ItemInfo : SpriteInfo
     int type;
     Texture texture = void;
 
-    this(lua_State *l, string textureFilenm)
+    this(lua_State *l, string textureFilenm, int frames = 1, int sides = 1)
     {
-        super(l,textureFilenm);
+        super(l,textureFilenm, frames, sides);
     }
 
     ~this()

@@ -34,7 +34,7 @@ immutable Api libactor = {
 extern (C):
 int libactor_register(lua_State *l)
 {
-    string spriteSheet = table_get!string(l, 1, "SpriteSheet", "res/campaigns/main/items/unknown.tga");
+    string spriteSheet = table_getstring(l, 1, "SpriteSheet", "res/campaigns/main/items/unknown.tga");
     int sides = table_get!int(l, 1, "Sides", 1);
     int frames = table_get!int(l, 1, "Frames", 1);
     ActorInfo info = new ActorInfo(l, spriteSheet);

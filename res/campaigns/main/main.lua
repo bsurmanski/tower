@@ -18,5 +18,6 @@ Item.new(GOLD):moveTo(0, 0, 5);
 Item.new(GOLD):moveTo(0, 0, 6);
 Item.new(GOLD):moveTo(2, 0, 6);
 Item.new(GOLD):moveTo(6, 0, 6);
+Item.new(SHIELD):moveTo(7, 0, 6);
 
 Model.new(FOUNTAIN):moveTo(3, 0, 1);
