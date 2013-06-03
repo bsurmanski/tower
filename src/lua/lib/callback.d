@@ -10,14 +10,14 @@ module lua.lib.callback;
 import std.traits;
 import std.string;
 
+import lua.lib.libentity_tmpl; // for entity push
+import lua.lib.libvector_tmpl; // for vector push
+
 import c.lua;
 import lua.luah;
 import math.vector;
 import entity.entity;
 import entity.actor;
-
-import lua.lib.libentity_tmpl; // for entity push
-import lua.lib.libvector_tmpl; // for vector push
 
 /**
  * TODO: add callbacks:

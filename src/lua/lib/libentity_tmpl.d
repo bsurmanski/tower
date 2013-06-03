@@ -19,6 +19,7 @@ if(is(Entity == T) || is(LuaEntity == T)) //TODO: change to all classes dirived 
 {
     import entity.actor;
     import entity.item;
+    import std.stdio;
     lua_pushlightuserdata(l, cast(void*) value);
     if(cast(Actor) value)
     {

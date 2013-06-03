@@ -36,6 +36,7 @@ abstract class LuaEntity : Entity
 
     override void update(float dt)
     {
+        position += velocity;
         luaCallback("Update", dt);
     }
 

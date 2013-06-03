@@ -11,10 +11,11 @@ FOUNTAIN_MODEL = {
     Name = "Fountain",
     Description = "A beautiful fountain",
     Update = function(self, dt)
-        --drop = Item.new(DROPLET);
-        --droppos = Vector.new(self:position());
-        --droppos:y(droppos:y() + 1);
-        --drop:position(droppos);
+        position = self:position();
+        drop = Item.new(DROPLET,
+                        position:x(),
+                        position:y() + 2,
+                        position:z() - 2);
     end
 };
 

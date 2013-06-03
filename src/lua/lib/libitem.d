@@ -7,8 +7,9 @@ import c.lua;
 import gl.glb.glb;
 import lua.api;
 import lua.luah;
-import entity.item;
 import lua.lib.libentity;
+import entity.item;
+import math.vector;
 
 immutable Api libitem = {
     "Item",
@@ -57,5 +58,11 @@ static int libitem_new(lua_State *l)
     int entindex = lua_gettop(l);
     lua_getglobal(l, "Item"); //set metatable for actor
     lua_setmetatable(l, entindex);
+
+    if(lua_isnumber(l, 2) && lua_isnumber(l, 3) && lua_isnumber(l, 4))
+    {
+        ent.position = Vec3(lua_tonumber(l, 2), lua_tonumber(l,3), lua_tonumber(l,4));
+    }
+
     return 1;
 }
