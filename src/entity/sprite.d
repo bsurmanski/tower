@@ -127,7 +127,10 @@ abstract class Sprite : LuaEntity
         //dmat.rotate(-PI / 4.0f, 1.0f, 0, 0); //face sprite towards screen
         dmat.scale(sinfo._width / 32.0f, sinfo._height / 32.0f, sinfo._height / 32.0f, 1.0f);
         dmat.scale(scale.x, scale.y, scale.z);
-        dmat.translate(this.position);
+
+        Vec4 pos = Matrix4().skewedy(-PI / 4) * Vec4(position.x, position.y, position.z, 1.0f) ;
+        dmat.translate(pos.x, pos.y, pos.z);
+        //dmat.translate(this.position);
         dmat = cam.getMatrix() * dmat;
 
         mat = cam.getMatrix() * mat;

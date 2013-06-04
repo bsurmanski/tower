@@ -27,6 +27,7 @@ immutable Api libentity = {
         {"destroy", &libentity_destroy},
         {"position", &libentity_position},
         {"velocity", &libentity_velocity},
+        {"acceleration", &libentity_acceleration},
     ],
     []
 };
@@ -101,6 +102,28 @@ int libentity_velocity(lua_State *l)
 
     Vec3 *vec = cast(Vec3*) lua_newuserdata(l, Vec3.sizeof);
     vec.data = ent.velocity.data;
+    lua_getglobal(l, "Vector");
+    lua_setmetatable(l, -2);
+
+    return 1;
+}
+
+int libentity_acceleration(lua_State *l)
+{
+    Entity ent = cast(Entity) lua_touserdata(l, 1);
+    if(lua_isuserdata(l, 2))
+    {
+        Vec3 *newvec = cast(Vec3*) lua_touserdata(l, 2);
+        ent.acceleration = *newvec;
+    }
+
+    if(lua_isnumber(l, 2) && lua_isnumber(l, 3) && lua_isnumber(l, 4))
+    {
+        ent.acceleration = Vec3(lua_tonumber(l, 2), lua_tonumber(l,3), lua_tonumber(l,4));
+    }
+
+    Vec3 *vec = cast(Vec3*) lua_newuserdata(l, Vec3.sizeof);
+    vec.data = ent.acceleration.data;
     lua_getglobal(l, "Vector");
     lua_setmetatable(l, -2);
 

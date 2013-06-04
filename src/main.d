@@ -64,6 +64,20 @@ void init(int w, int h)
     state.register(luaApis);
     state.run("res/default.lua");
 
+    /*
+    import std.file;
+    import std.algorithm;
+    foreach(mod; dirEntries("res/campaigns/main/ents/", SpanMode.shallow))
+    {
+        if(mod.isDir)
+        {
+            foreach(lua; filter!`a.name.endsWith(".lua")`(dirEntries(mod.name, SpanMode.shallow)))
+            {
+                state.run(lua);
+            }
+        }
+    }*/
+
     hud_display = new Hud();
 }
 

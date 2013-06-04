@@ -70,8 +70,9 @@ abstract class Entity
     int type;
     float rotation;
     Vec3 position;
-    Vec3 scale;
     Vec3 velocity;
+    Vec3 acceleration;
+    Vec3 scale;
     Ball3 bounds;
 
     EntityInfo info;
@@ -81,6 +82,7 @@ abstract class Entity
         this.type = type;
         position = Vec3(0,0,0);
         velocity = Vec3(0,0,0);
+        acceleration = Vec3(0,0,0);
         scale = Vec3(1,1,1);
         rotation = 0.0f;
         info = EntityInfo.get(type); 
@@ -97,8 +99,12 @@ abstract class Entity
     }
 
     void draw(Camera cam);
-    void update(float dt);
     void collide(Entity other, float dt);
+    void update(float dt)
+    {
+        velocity += acceleration * dt; //TODO RK4 integration. move up
+        position += velocity * dt;
+    }
     //void input(
     
     static void updateAll(float dt)
