@@ -164,6 +164,14 @@ void table_set(K, T)(lua_State *l, int table_index, K key, T value)
     lua_settable(l, table_index);
 }
 
+void register_top(K)(lua_State *l, K key)
+{
+    lua_push(l, key);
+    lua_pushvalue(l, -2);
+    lua_settable(l, LUA_REGISTRYINDEX);
+    lua_pop(l, 1);
+}
+
 alias table_get!string table_getstring;
 alias table_get!int    table_getinteger;
 alias table_get!float  table_getfloat;

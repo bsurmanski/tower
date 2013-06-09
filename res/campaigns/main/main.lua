@@ -1,10 +1,11 @@
 -- global lua file for this campaign
 --
 
-ENT_MODULE = CAMPAIGN_MODULE .. ".ents"
-ENT_FOLDER = CAMPAIGN_FOLDER .. "/ents"
 
-require(ENT_MODULE .. ".load");
+--require(ENT_MODULE .. ".load");
+--
+
+M = require(ENT_MODULE .. ".fountain.fountain");
 
 mainActor = Actor.new(MAIN);
 Actor.focus(mainActor);
@@ -20,7 +21,7 @@ Item.new(GOLD):moveTo(2, 0, 6);
 Item.new(GOLD):moveTo(6, 0, 6);
 Item.new(SHIELD):moveTo(7, 0, 6);
 
-Model.new(FOUNTAIN):moveTo(3, 0, 1);
-Model.new(FOUNTAIN):moveTo(5, 0, 4);
+Model.new(M.Fountain):moveTo(3, 0, 1);
+Model.new(M.Fountain):moveTo(5, 0, 4);
 
 Item.new(FLOWER):moveTo(6, 0, 7);

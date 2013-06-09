@@ -8,6 +8,7 @@ import gl.glb.glb;
 import std.stdio;
 
 import lua.state;
+import lua.luaModule;
 import lua.lib.all;
 import container.geom.mesh;
 import math.vector;
@@ -62,21 +63,11 @@ void init(int w, int h)
 
     state = new State();
     state.register(luaApis);
-    state.run("res/default.lua");
+    state.addToPath("./res/campaigns/main/?.lua");
 
-    /*
-    import std.file;
-    import std.algorithm;
-    foreach(mod; dirEntries("res/campaigns/main/ents/", SpanMode.shallow))
-    {
-        if(mod.isDir)
-        {
-            foreach(lua; filter!`a.name.endsWith(".lua")`(dirEntries(mod.name, SpanMode.shallow)))
-            {
-                state.run(lua);
-            }
-        }
-    }*/
+    state.run("res/default.lua");
+    state.run("res/campaigns/main/ents/");
+    state.run("res/campaigns/main/main.lua");
 
     hud_display = new Hud();
 }

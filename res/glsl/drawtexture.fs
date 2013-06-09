@@ -4,7 +4,6 @@ uniform sampler2D tex0;
 
 smooth in vec3 fnormal;
 smooth in vec2 ftexCoord;
-smooth in float f_depth;
 
 out vec4 fragColor;
 out vec4 fragNormal;
@@ -17,8 +16,5 @@ void main()
 
     fragColor = color;
     fragNormal = vec4(fnormal, 1.0f);
-
-    //TODO: correct depth value for sprites
-    //gl_FragDepth = f_depth;
 }
 

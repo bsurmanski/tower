@@ -120,22 +120,13 @@ abstract class Sprite : LuaEntity
         mat.rotate(-PI / 4.0f, 1.0f, 0, 0); //face sprite towards screen
         mat.scale(sinfo._width / 32.0f, sinfo._height / 32.0f, sinfo._height / 32.0f, 1.0f);
         mat.scale(scale.x, scale.y, scale.z);
-        mat.translate(this.position);
 
-        Matrix4 dmat;
-        dmat.translate(0, 1, 0); //center sprite at bottom
-        //dmat.rotate(-PI / 4.0f, 1.0f, 0, 0); //face sprite towards screen
-        dmat.scale(sinfo._width / 32.0f, sinfo._height / 32.0f, sinfo._height / 32.0f, 1.0f);
-        dmat.scale(scale.x, scale.y, scale.z);
-
-        Vec4 pos = Matrix4().skewedy(-PI / 4) * Vec4(position.x, position.y, position.z, 1.0f) ;
-        dmat.translate(pos.x, pos.y, pos.z);
-        //dmat.translate(this.position);
-        dmat = cam.getMatrix() * dmat;
+        // skew y axis along z axis.
+        Vec4 pos = cam.basisMatrix * Vec4(position.x, position.y, position.z, 1.0f) ;
+        mat.translate(cast(Vec3) pos);
 
         mat = cam.getMatrix() * mat;
         program.uniform(Shader.VERTEX_SHADER, 0, (float[16]).sizeof, true, mat.ptr);
-        program.uniform(Shader.VERTEX_SHADER, 1, (float[16]).sizeof, true, dmat.ptr);
         program.texture(Shader.FRAGMENT_SHADER, 0, *sinfo.getTexture(0, _frame));
         program.draw(Mesh.getUnitQuad().getVertexBuffer());
     }

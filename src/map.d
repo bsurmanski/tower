@@ -126,7 +126,6 @@ struct Map
     void draw(Camera cam)
     {
         //glDisable(GL_DEPTH_TEST);
-        //glDisable(GL_SCISSOR_TEST);
         //glDisable(GL_CULL_FACE);
         Matrix4 mat;
         mat = cam.getMatrix();

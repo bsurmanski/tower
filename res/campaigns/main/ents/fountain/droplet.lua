@@ -1,10 +1,7 @@
 --
 -- Droplet
 --
-
---ENT_FOLDER = "";
-
-local M = {}
+--
 
 DROPLET_ITEM = {
     Sprite = ENT_FOLDER .. "/droplet/droplet.tga",
@@ -26,13 +23,3 @@ DROPLET_ITEM = {
 };
 
 DROPLET = Item.register(DROPLET_ITEM);
-
-local x = 5
-
-M.__init = function()
-    x = x + 4;
-    print(x);
-end
-
-
-return M

@@ -9,11 +9,14 @@ module entity.luaEntity;
 
 import c.lua;
 
+import std.string;
+
 import entity.entity;
+import lua.luaValue;
 import lua.lib.callback;
 
 
-abstract class LuaEntityInfo : EntityInfo 
+abstract class LuaEntityInfo : EntityInfo
 {
     lua_State *_state = null;
 
@@ -26,7 +29,7 @@ abstract class LuaEntityInfo : EntityInfo
     }
 }
 
-abstract class LuaEntity : Entity
+abstract class LuaEntity : Entity, LuaValue
 {
     this(int type)
     {
@@ -49,5 +52,17 @@ abstract class LuaEntity : Entity
     {
         lua_State *l = (cast(LuaEntityInfo)this.info).luaState; 
         lua_callback(l, this.info, name, this, args);
+    }
+
+    static string typeName()
+    {
+        return "Entity";
+    }
+
+    void push(lua_State *l)
+    {
+        lua_pushlightuserdata(l, cast(void*) this);
+        lua_getglobal(l, typeName().toStringz());
+        lua_setmetatable(l, -2);
     }
 }

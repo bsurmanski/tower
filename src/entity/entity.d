@@ -166,7 +166,10 @@ abstract class Entity
         mat.rotate(-PI / 2.0f, 1.0f, 0.0f, 0.0f);
         const(int) *texturesz = info._shadow.size();
         mat.scale(texturesz[0] / 32.0f, texturesz[1] / 32.0f, texturesz[1] / 32.0f);
-        mat.translate(this.position);
+
+        Vec3 pos = this.position;
+        pos.y = 0;
+        mat.translate(pos);
 
         mat = cast(Matrix4) cam.getMatrix() * mat;
        

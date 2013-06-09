@@ -7,6 +7,8 @@
 
 module lua.state;
 
+import std.algorithm;
+import std.file;
 import std.stdio;
 import std.conv;
 import std.string;
@@ -17,6 +19,8 @@ import c.lauxlib;
 import c.lualib;
 
 import lua.api;
+
+import lua.luaModule;
 
 class State
 {
@@ -111,6 +115,10 @@ class State
 
         register(api, tableindex);
 
+        lua_pushstring(state, "__name");
+        lua_pushstring(state, api.name.toStringz());
+        lua_settable(state, tableindex);
+
         lua_setglobal(state, api.name.toStringz());
     }
 
@@ -127,7 +135,7 @@ class State
         lua_getglobal(state, "package");
         lua_getfield(state, -1, "path");
         string curpath = to!string(lua_tostring(state, -1));
-        string newpath = curpath ~ path;
+        string newpath = curpath ~ path ~ ";";
         lua_pop(state, 1); //remove path string from stack
         lua_pushstring(state, newpath.toStringz());
         lua_setfield(state, -2, "path");
@@ -141,7 +149,28 @@ class State
 
     void run(string filenm)
     {
+        if(filenm.isDir())
+        {
+            foreach(mod; dirEntries(filenm, SpanMode.shallow))
+            {
+                if(mod.isDir)
+                {
+                    foreach(lua; filter!`a.name.endsWith(".lua")`(dirEntries(mod.name, SpanMode.shallow)))
+                    {
+                        LuaModule lmod = new LuaModule(this, lua);
+                    }
+                }
+            }
+        } else if(filenm.isFile())
+        {
+            luaL_loadfile(state, filenm.toStringz());
+            lua_call(state, 0, 0);
+        }
+    }
+
+    void run(string filenm, int nres)
+    {
         luaL_loadfile(state, filenm.toStringz());
-        lua_call(state, 0, 0);
+        lua_call(state, 0, nres);
     }
 }

@@ -13,6 +13,7 @@ import entity.entity;
 import entity.actor;
 import entity.item;
 import lua.luah;
+import lua.luaValue;
 
 void lua_push(T)(lua_State *l, T value)
 if(is(Entity == T) || is(LuaEntity == T)) //TODO: change to all classes dirived from Entity

@@ -3,10 +3,13 @@
 --
 --
 
-require(ENT_MODULE .. ".droplet.droplet");
+require("ents.droplet.droplet");
+
+local M = {};
 
 local T = 0;
-FOUNTAIN_MODEL = {
+
+local FOUNTAIN_MODEL = {
     Model = ENT_FOLDER .. "/fountain/fountain.mdl",
     Texture = ENT_FOLDER .. "/fountain/fountain.tga",
     Name = "Fountain",
@@ -23,4 +26,10 @@ FOUNTAIN_MODEL = {
     end
 };
 
-FOUNTAIN = Model.register(FOUNTAIN_MODEL);
+M.__init = function()
+    M.Fountain = Model.register(FOUNTAIN_MODEL);
+end
+
+M.Fountain = Model.register(FOUNTAIN_MODEL);
+
+return M

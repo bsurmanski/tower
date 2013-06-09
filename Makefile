@@ -10,6 +10,8 @@ SRC=src/main.d \
 	src/lua/luah.d\
 	src/lua/state.d\
 	src/lua/table.d\
+	src/lua/luaValue.d\
+	src/lua/luaModule.d\
 	src/lua/lib/all.d\
 	src/lua/lib/callback.d\
 	src/lua/lib/libactor.d\

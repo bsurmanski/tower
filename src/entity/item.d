@@ -42,6 +42,11 @@ class Item : Sprite
         super(id);
     }
 
+    static string typeName()
+    {
+        return "Item";
+    }
+
     override void update(float dt)
     {
         super.update(dt); 

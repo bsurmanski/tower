@@ -79,6 +79,11 @@ class Actor : Sprite
         return actorFocus;
     }
 
+    static string typeName()
+    {
+        return "Actor";
+    }
+
     override void draw(Camera cam)
     {
         if(this == focus) //TODO move to update. provide some way to get main camera from there
