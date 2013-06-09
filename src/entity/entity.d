@@ -27,12 +27,15 @@ abstract class EntityInfo
     static EntityInfo[] registry;
 
     static bool _entityinit = false;
+    bool _shadowed = true;
     static Texture _shadow = void;
     static Sampler _sampler = void;
 
     int _id = -1;
 
     @property int id() { return _id; }
+    @property bool shadowed() { return _shadowed; }
+    @property void shadowed(bool val) { _shadowed = val; }
 
     this()
     {
@@ -57,7 +60,8 @@ abstract class EntityInfo
 
     static EntityInfo get(int id)
     {
-        assert(id >= 0 && registry.length > id);
+        assert(id >= 0 && id < registry.length);
+        assert(registry[id]);
         return registry[id];
     }
 }
@@ -85,7 +89,7 @@ abstract class Entity
         acceleration = Vec3(0,0,0);
         scale = Vec3(1,1,1);
         rotation = 0.0f;
-        info = EntityInfo.get(type); 
+        info = EntityInfo.get(type);
 
         bounds.radius = 0.2;
 

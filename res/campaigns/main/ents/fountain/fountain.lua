@@ -3,11 +3,11 @@
 --
 --
 
-require("ents.droplet.droplet");
+require("ents.fountain.droplet");
 
-local M = {};
+local M = {}
 
-local T = 0;
+local T = 0
 
 local FOUNTAIN_MODEL = {
     Model = ENT_FOLDER .. "/fountain/fountain.mdl",
@@ -24,12 +24,10 @@ local FOUNTAIN_MODEL = {
                         position:z());
             end
     end
-};
+}
 
 M.__init = function()
-    M.Fountain = Model.register(FOUNTAIN_MODEL);
+    Fountain = Model.register(FOUNTAIN_MODEL)
 end
-
-M.Fountain = Model.register(FOUNTAIN_MODEL);
 
 return M

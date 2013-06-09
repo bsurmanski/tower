@@ -3,8 +3,10 @@
 --
 --
 
-DROPLET_ITEM = {
-    Sprite = ENT_FOLDER .. "/droplet/droplet.tga",
+local M = {}
+
+local DROPLET_ITEM = {
+    Sprite = ENT_FOLDER .. "/fountain/droplet.tga",
     Name = "Droplet",
     Description = "A little drop of water",
     Shadow = false,
@@ -20,6 +22,10 @@ DROPLET_ITEM = {
             self:destroy()
         end
     end,
-};
+}
 
-DROPLET = Item.register(DROPLET_ITEM);
+M.__init = function()
+    DROPLET = Item.register(DROPLET_ITEM)
+end
+
+return M

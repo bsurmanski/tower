@@ -51,7 +51,7 @@ class ModelEntity : LuaEntity
 
     this(int id)
     {
-        super(id); 
+        super(id);
 
         sampler = Sampler();
         sampler.setFilter(Sampler.NEAREST, Sampler.NEAREST);

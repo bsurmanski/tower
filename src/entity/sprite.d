@@ -112,8 +112,13 @@ abstract class Sprite : LuaEntity
 
     override void draw(Camera cam)
     {
-        this.drawShadow(cam, program);
         SpriteInfo sinfo = cast(SpriteInfo) info;
+
+        if(info.shadowed)
+        {
+            this.drawShadow(cam, program);
+        }
+
         const(int) *texturesz = (*sinfo._texture[_frame]).size();
         Matrix4 mat; 
         mat.translate(0, 1, 0); //center sprite at bottom

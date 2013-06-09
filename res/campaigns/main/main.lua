@@ -5,7 +5,7 @@
 --require(ENT_MODULE .. ".load");
 --
 
-M = require(ENT_MODULE .. ".fountain.fountain");
+require(ENT_MODULE .. ".fountain.fountain");
 
 mainActor = Actor.new(MAIN);
 Actor.focus(mainActor);
@@ -21,7 +21,7 @@ Item.new(GOLD):moveTo(2, 0, 6);
 Item.new(GOLD):moveTo(6, 0, 6);
 Item.new(SHIELD):moveTo(7, 0, 6);
 
-Model.new(M.Fountain):moveTo(3, 0, 1);
-Model.new(M.Fountain):moveTo(5, 0, 4);
+Model.new(Fountain):moveTo(3, 0, 1);
+Model.new(Fountain):moveTo(5, 0, 4);
 
 Item.new(FLOWER):moveTo(6, 0, 7);

@@ -43,6 +43,8 @@ class Actor : Sprite
 {
     static Actor actorFocus = null;
 
+    Entity _inventory[4];
+
     ubyte _selectedItem;
     ubyte _nitems;
     uint _healthmax;
@@ -67,6 +69,11 @@ class Actor : Sprite
         _wealthmax = 100;
         _health = 60;
         _wealth = 0;
+
+        for(int i = 0; i < 4; i++)
+        {
+            _inventory[i] = null;
+        }
     }
 
     @property static void focus(Actor a)
@@ -142,6 +149,14 @@ class Actor : Sprite
             {
                 position.z -= 0.05f;
                 frame = 1;
+            }
+
+            if(glfwGetKey('z'))
+            {
+                if(_inventory[_selectedItem])
+                {
+                    //TODO: attack, use, etc   
+                }
             }
         }
 

@@ -19,7 +19,7 @@ class ItemSelectComponent : GlbComponent
 {
     Component selector; //XXX WTF, errors all out if ImageComponent
     ImageComponent frames[4];
-    ImageComponent active[4];
+    scope ImageComponent active[4];
 
     this()
     {
@@ -31,6 +31,8 @@ class ItemSelectComponent : GlbComponent
             frames[i]._size[] *= 2;
             frames[i].top = 8 + (8 + frames[i].size[1]) * i;
             frames[i].right = 8;
+
+            active[i] = null;
         }
 
         selector = new ImageComponent("res/tex/itemSelect.tga");
@@ -46,13 +48,22 @@ class ItemSelectComponent : GlbComponent
         int dy = cast(int) ceil((to_y - selector.top) * EASE_CONST);
         if(dy == 0 && to_y != selector.top) dy = cast(int) copysign(1, to_y - selector.top);
         selector.top = selector.top + dy;
+
+        for(int i = 0; i < 4; i++)
+        {
+            //active[i] = Actor.focus;
+        }
     }
 
     override void draw()
     {
-        foreach(ref frame; frames)
+        for(int i = 0; i < 4; i++)
         {
-            frame.draw();
+            frames[i].draw();
+            if(active[i])
+            {
+                active[i].draw();
+            }
         }
 
         selector.draw();

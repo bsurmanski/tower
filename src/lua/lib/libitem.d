@@ -40,6 +40,7 @@ static int libitem_register(lua_State *l)
     bool shadow     =   table_get!bool(l, 1, "Shadow", true);
 
     ItemInfo info = new ItemInfo(l, texture, frames, sides); ///< automatically registers itself
+    info.shadowed = shadow;
 
     // add parameter table to registry (key of ActorInfo)
     lua_pushlightuserdata(l, cast(void*) info);
