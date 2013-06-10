@@ -79,7 +79,7 @@ abstract class Entity
     Vec3 scale;
     Ball3 bounds;
 
-    EntityInfo info;
+    EntityInfo _info;
 
     this(int type)
     {
@@ -89,7 +89,7 @@ abstract class Entity
         acceleration = Vec3(0,0,0);
         scale = Vec3(1,1,1);
         rotation = 0.0f;
-        info = EntityInfo.get(type);
+        _info = EntityInfo.get(type);
 
         bounds.radius = 0.2;
 
@@ -99,7 +99,12 @@ abstract class Entity
 
     ~this()
     {
-        info = null;
+        _info = null;
+    }
+
+    @property EntityInfo info()
+    {
+        return _info;
     }
 
     void draw(Camera cam);

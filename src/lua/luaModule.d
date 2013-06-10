@@ -26,7 +26,7 @@ class LuaModule
 
         if(lua_istable(l, -1))
         {
-            lua_getfield(l, -1, "__init"); // if has __init metamethod, callit
+            lua_getfield(l, -1, "__init"); // if module has __init method, call it
             if(lua_isfunction(l, -1))
             {
                 lua_call(l, 0, 0); 

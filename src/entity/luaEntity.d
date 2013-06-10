@@ -37,6 +37,11 @@ abstract class LuaEntity : Entity, LuaValue
         luaCallback("New");
     }
 
+    override LuaEntityInfo info()
+    {
+        return cast(LuaEntityInfo) _info;
+    }
+
     override void update(float dt)
     {
         super.update(dt);

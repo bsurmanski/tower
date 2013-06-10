@@ -32,15 +32,17 @@ extern(C):
 
 static int libitem_register(lua_State *l)
 {
-    int type =          table_get!int(l, 1, "Type", 0);
+    int type        =   table_get!int(l, 1, "Type", 0);
     bool autopickup =   table_get!bool(l, 1, "Autopickup", false);
     string texture  =   table_getstring(l, 1, "Sprite", "res/campaigns/main/items/unknown.tga");
     int frames      =   table_get!int(l, 1, "Frames", 1); //number of frames in sprite animation
     int sides       =   table_get!int(l, 1, "Sides", 1); // number of sides to the sprite
     bool shadow     =   table_get!bool(l, 1, "Shadow", true);
+    bool holdable   =   table_get!bool(l, 1, "Holdable", true);
 
     ItemInfo info = new ItemInfo(l, texture, frames, sides); ///< automatically registers itself
     info.shadowed = shadow;
+    info.holdable = holdable;
 
     // add parameter table to registry (key of ActorInfo)
     lua_pushlightuserdata(l, cast(void*) info);

@@ -8,6 +8,7 @@ M.__init = function()
     local GOLD_ITEM = {
         Type = Item.Misc, 
         Autopickup = true,
+        Holdable = false,
         Sprite = ENT_FOLDER .. "/gold/gold.tga",
         Name = "Gold",
         Description = "Yarrr, delicious gold",

@@ -10,6 +10,7 @@ local DROPLET_ITEM = {
     Name = "Droplet",
     Description = "A little drop of water",
     Shadow = false,
+    Holdable = false,
     New = function(self)
         self:acceleration(0, -4.0, 0);
         self:velocity((math.random() - 0.5),

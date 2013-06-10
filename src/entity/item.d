@@ -20,6 +20,7 @@ import camera;
 class ItemInfo : SpriteInfo
 {
     bool autopickup;
+    bool holdable;
     int type;
     Texture texture = void;
 
@@ -40,6 +41,11 @@ class Item : Sprite
     this(int id)
     {
         super(id);
+    }
+
+    @property override ItemInfo info()
+    {
+        return cast(ItemInfo) _info;
     }
 
     static string typeName()

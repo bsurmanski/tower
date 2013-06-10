@@ -18,6 +18,7 @@ import gl.glb.glb;
 
 import lua.lib.callback;
 import entity.entity;
+import entity.item;
 import entity.sprite;
 import math.matrix;
 import math.vector;
@@ -76,6 +77,11 @@ class Actor : Sprite
         }
     }
 
+    @property override ActorInfo info()
+    {
+        return cast(ActorInfo) _info;
+    }
+
     @property static void focus(Actor a)
     {
         actorFocus = a;
@@ -101,10 +107,22 @@ class Actor : Sprite
         super.draw(cam);
     }
 
+    override void collide(Entity other, float dt)
+    {
+        super.collide(other, dt);
+        if(Item item = cast(Item) other)
+        {
+            if(item.info.holdable)
+            {
+                _inventory[0] = item;
+                //item.destroy();     
+            }
+        }
+    }
+
 
     override void update(float dt)
     {
-        ActorInfo ainfo = cast(ActorInfo) info;
         if(this == focus) // we are the main character! control!!!!
         {
             if(glfwGetKey('1'))
@@ -161,5 +179,10 @@ class Actor : Sprite
         }
 
         super.update(dt);
+        
+        if(_inventory[0])
+        {
+            _inventory[0].position = position + Vec3(0.3f,0.5f,0.1f);
+        }
     }
 }

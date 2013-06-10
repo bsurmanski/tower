@@ -60,15 +60,19 @@ class ModelEntity : LuaEntity
         program.source("res/glsl/drawmodel.fs", Shader.FRAGMENT_SHADER);
     }
 
+    @property override ModelInfo info()
+    {
+        return cast(ModelInfo) _info;
+    }
+
     override void draw(Camera cam)
     {
-        ModelInfo minfo = cast(ModelInfo) info;
         // now all the models are all slanty!
         Matrix4 mat;
         mat.translate(position); 
         mat = cam.getMatrix * mat * cam.basisMatrix;
         program.uniform(Shader.VERTEX_SHADER, 1, (float[16]).sizeof, true, mat.ptr);
-        program.texture(Shader.FRAGMENT_SHADER, 0, minfo._texture);
+        program.texture(Shader.FRAGMENT_SHADER, 0, info._texture);
 
         foreach(mesh; (cast(ModelInfo) info)._meshes)
         {

@@ -110,20 +110,23 @@ abstract class Sprite : LuaEntity
         super(id);
     }
 
+    @property override SpriteInfo info()
+    {
+        return cast(SpriteInfo) _info;
+    }
+
     override void draw(Camera cam)
     {
-        SpriteInfo sinfo = cast(SpriteInfo) info;
-
         if(info.shadowed)
         {
             this.drawShadow(cam, program);
         }
 
-        const(int) *texturesz = (*sinfo._texture[_frame]).size();
+        const(int) *texturesz = (*info._texture[_frame]).size();
         Matrix4 mat; 
         mat.translate(0, 1, 0); //center sprite at bottom
         mat.rotate(-PI / 4.0f, 1.0f, 0, 0); //face sprite towards screen
-        mat.scale(sinfo._width / 32.0f, sinfo._height / 32.0f, sinfo._height / 32.0f, 1.0f);
+        mat.scale(info._width / 32.0f, info._height / 32.0f, info._height / 32.0f, 1.0f);
         mat.scale(scale.x, scale.y, scale.z);
 
         // skew y axis along z axis.
@@ -132,7 +135,7 @@ abstract class Sprite : LuaEntity
 
         mat = cam.getMatrix() * mat;
         program.uniform(Shader.VERTEX_SHADER, 0, (float[16]).sizeof, true, mat.ptr);
-        program.texture(Shader.FRAGMENT_SHADER, 0, *sinfo.getTexture(0, _frame));
+        program.texture(Shader.FRAGMENT_SHADER, 0, *info.getTexture(0, _frame));
         program.draw(Mesh.getUnitQuad().getVertexBuffer());
     }
 }

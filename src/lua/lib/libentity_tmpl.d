@@ -3,6 +3,9 @@
  * tower
  * June 01, 2013
  * Brandon Surmanski
+ *
+ * We need this module because for some reason, D can't access template functions if there is a
+ * local template function with the same signature (but different static requirements)
  */
 
 module lua.lib.libentity_tmpl;

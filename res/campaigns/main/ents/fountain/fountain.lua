@@ -14,6 +14,7 @@ local FOUNTAIN_MODEL = {
     Texture = ENT_FOLDER .. "/fountain/fountain.tga",
     Name = "Fountain",
     Description = "A beautiful fountain",
+    Holdable = false,
     Update = function(self, dt)
         T = T + dt;
         if(math.floor(T) % 2 == 1 and math.floor(T * 10) % 2 == 1 and  math.floor(T * 100) % 2 == 1) then
