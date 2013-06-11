@@ -65,7 +65,7 @@ class State
         lua_close(state);
     }
 
-    private void register(ref Api api, int tableindex)
+    private void register(ref const Api api, int tableindex)
     {
         foreach(func; api.functions)
         {
@@ -105,7 +105,7 @@ class State
         }
     }
 
-    void register(ref Api api)
+    void register(ref const Api api)
     {
         lua_newtable(state);
         int tableindex = lua_gettop(state);
@@ -122,7 +122,7 @@ class State
         lua_setglobal(state, api.name.toStringz());
     }
 
-    void register(Api[] apis)
+    void register(const Api[] apis)
     {
         foreach(api; apis)
         {

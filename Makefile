@@ -41,13 +41,14 @@ SRC=src/main.d \
 	src/ui/hud/wealthComponent.d\
 	src/ui/font.d\
 	/usr/local/include/d/gl/glb/*.d \
-	/usr/local/include/d/c/*.d
+	/usr/local/include/d/c/*.d\
+	#/usr/include/d/druntime/import/object.di\ #Why must i add this?!?
 
 INC=-I/usr/local/include/d \
 	-Isrc
 
 dmd:
-	dmd $(SRC) -L-lglfw -L-lGL -L-llua -L-lglb $(INC) -g -debug -unittest -odbuild -ofa.out
+	dmd $(SRC) -L-lglfw -L-lGL -L-llua -L-lglb -L-lphobos2 $(INC) -g -debug -unittest -odbuild -ofa.out
 
 ldc:
 	ldc2 $(SRC) -L-lglfw -L-lGL -L-llua -L-lglb $(INC) -g  -unittest -od=build -of=a.out

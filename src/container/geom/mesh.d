@@ -68,13 +68,13 @@ struct Mesh
     Vertex verts[];
     Face faces[];
 
-    Buffer vbuffer;
-    Buffer ibuffer;
+    Buffer *vbuffer = null;
+    Buffer *ibuffer = null;
 
     this(const Vertex verts[])
     {
-        ibuffer = Buffer.init;
-        vbuffer = Buffer.init;
+        //ibuffer = Buffer.init;
+        //vbuffer = Buffer.init;
         add(verts);
         if(verts.length) vdirty = true;
         fdirty = false;
@@ -82,8 +82,8 @@ struct Mesh
 
     this(const Vertex verts[], const Face faces[])
     {
-        ibuffer = Buffer.init;
-        vbuffer = Buffer.init;
+        //ibuffer = Buffer.init;
+        //vbuffer = Buffer.init;
         add(verts);  
         add(faces);
 
@@ -93,8 +93,8 @@ struct Mesh
 
     this(string filenm)
     {
-        ibuffer = Buffer.init;
-        vbuffer = Buffer.init;
+        //ibuffer = Buffer.init;
+        //vbuffer = Buffer.init;
         File file = File(filenm, "r"); 
 
         Header header;
@@ -240,23 +240,31 @@ struct Mesh
 
         if(vdirty)
         {
-            destroy(vbuffer);
-            vbuffer = Buffer(verts, vlayout);
+            if(vbuffer)
+            {
+                destroy(vbuffer);
+            }
+
+            vbuffer = new Buffer(verts, vlayout);
             vdirty = false;
         }
 
-        return vbuffer;
+        return *vbuffer;
     }
 
     ref Buffer getIndexBuffer()
     {
         if(fdirty)
         {
-            destroy(ibuffer);
-            ibuffer = Buffer(faces, GLB_USHORT, Buffer.STATIC_DRAW);
+            if(ibuffer)
+            {
+                destroy(ibuffer);
+            }
+
+            ibuffer = new Buffer(faces, GLB_USHORT, Buffer.STATIC_DRAW);
             fdirty = false;
         }
-        return ibuffer;
+        return *ibuffer;
     }
 
     void write(string filenm)

@@ -40,7 +40,7 @@ int libkey_bind(lua_State *l)
 
 enum
 {
-    GAME_PAUSE,
+    GAME_PAUSE = 0,
     GAME_SELECT,
     GAME_CANCEL,
     GAME_UP,
@@ -79,5 +79,3 @@ static immutable LuaConst keyConsts[] =
     {"NEXT_ITEM", LUA_TNUMBER, ACTOR_NEXT_ITEM},
     {"PREV_ITEM", LUA_TNUMBER, ACTOR_PREV_ITEM},
 ];
-
-

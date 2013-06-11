@@ -93,9 +93,14 @@ abstract class Sprite : LuaEntity
     static Program program;
 
     int _frame = 0;
+    int _side = 0;
 
     @property int frame() { return _frame; }
-    @property void frame(int f) { _frame = f % to!int((cast(SpriteInfo) info)._frames + 1); }
+    @property void frame(int f) { _frame = f % cast(int)(info._frames); }
+
+    //TODO: make sides index independently
+    @property int side() { return _side; }
+    @property void side(int s) { _side = s % cast(int)(info._sides); }
     
     this(int id)
     {
@@ -122,7 +127,11 @@ abstract class Sprite : LuaEntity
             this.drawShadow(cam, program);
         }
 
+        try{
         const(int) *texturesz = (*info._texture[_frame]).size();
+        }catch{
+            writeln(); 
+        }
         Matrix4 mat; 
         mat.translate(0, 1, 0); //center sprite at bottom
         mat.rotate(-PI / 4.0f, 1.0f, 0, 0); //face sprite towards screen
@@ -135,7 +144,7 @@ abstract class Sprite : LuaEntity
 
         mat = cam.getMatrix() * mat;
         program.uniform(Shader.VERTEX_SHADER, 0, (float[16]).sizeof, true, mat.ptr);
-        program.texture(Shader.FRAGMENT_SHADER, 0, *info.getTexture(0, _frame));
+        program.texture(Shader.FRAGMENT_SHADER, 0, *info.getTexture(_frame, _side));
         program.draw(Mesh.getUnitQuad().getVertexBuffer());
     }
 }

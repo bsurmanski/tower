@@ -44,7 +44,7 @@ class Actor : Sprite
 {
     static Actor actorFocus = null;
 
-    Entity _inventory[4];
+    Sprite _inventory[4];
 
     ubyte _selectedItem;
     ubyte _nitems;
@@ -145,7 +145,8 @@ class Actor : Sprite
                 _selectedItem = 3;
             }
 
-            frame = 0;
+            side = 0;
+            frame = 0; //TODO
             if(glfwGetKey(GLFW_KEY_LEFT))
             {
                 position.x -= 0.05f;
@@ -166,7 +167,8 @@ class Actor : Sprite
             if(glfwGetKey(GLFW_KEY_UP))
             {
                 position.z -= 0.05f;
-                frame = 1;
+                side = 1;
+                frame = 1; //TODO
             }
 
             if(glfwGetKey('z'))
@@ -178,11 +180,13 @@ class Actor : Sprite
             }
         }
 
-        super.update(dt);
         
         if(_inventory[0])
         {
-            _inventory[0].position = position + Vec3(0.3f,0.5f,0.1f);
+            _inventory[0].position = position + Vec3(0.3f,0.5f, (-0.2f * side) + 0.1f);
+            _inventory[0].side = side;
         }
+
+        super.update(dt);
     }
 }

@@ -14,7 +14,7 @@ import lua.lib.libmodel;
 import lua.lib.libkey;
 import lua.lib.libvector;
 
-static Api[] luaApis = [
+static immutable(Api)[] luaApis = [
     libentity,
     libactor,
     libitem,
