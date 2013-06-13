@@ -8,6 +8,7 @@
 module container.list;
 
 import std.functional;
+import std.traits;
 
 struct List(T)
 {
@@ -115,6 +116,24 @@ struct List(T)
         _length++;
 
         return 1;
+    }
+
+    void append(U)(U val)
+    if(isImplicitlyConvertible!(U, T))
+    {
+        insertBack(val);
+    }
+
+    T remove(T value)
+    {
+        for(Node!T *n = begin; n != null; n = n.next)
+        {
+            if(n.value == value)
+            {
+                return remove(n);
+            }
+        }
+        return T.init;
     }
 
     T remove(Node!T *node)

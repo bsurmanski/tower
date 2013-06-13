@@ -45,6 +45,7 @@ class Model
     }
 
     void opOpAssign(string op)(const Texture texture)
+    if(op == "~")
     {
         _textures ~= texture;
     }
@@ -53,7 +54,7 @@ class Model
     void draw(Camera cam)
     {
         // okay, everything is all slanty!
-        Matrix4 mat = cam.getMatrix() * Matrix4().skewedy(-PI / 4);
+        Matrix4 mat = cam.transformation * cam.basis;
         program.uniform(Shader.VERTEX_SHADER, 1, (float[16]).sizeof, true, mat.ptr);
         //program.texture(Shader.FRAGMENT_SHADER, 0, 
 

@@ -10,6 +10,8 @@
 
 module lua.lib.libentity_tmpl;
 
+import std.traits;
+
 import c.lua;
 import entity.luaEntity;
 import entity.entity;
@@ -20,6 +22,7 @@ import lua.luaValue;
 
 void lua_push(T)(lua_State *l, T value)
 if(is(Entity == T) || is(LuaEntity == T)) //TODO: change to all classes dirived from Entity
+//if(is(T == class) && (Entity in BaseTypeTuple!(T)))
 {
     import entity.actor;
     import entity.item;

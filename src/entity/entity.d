@@ -180,7 +180,7 @@ abstract class Entity
         pos.y = 0;
         mat.translate(pos);
 
-        mat = cast(Matrix4) cam.getMatrix() * mat;
+        mat = cast(Matrix4) cam.transformation * mat;
        
         program.uniform(Shader.VERTEX_SHADER, 0, (float[16]).sizeof, true, mat.ptr);
         program.texture(Shader.FRAGMENT_SHADER, 0, info._shadow);

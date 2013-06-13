@@ -120,6 +120,21 @@ abstract class Sprite : LuaEntity
         return cast(SpriteInfo) _info;
     }
 
+    override void update(float dt)
+    {
+        if(position.y > 0)
+        {
+            acceleration.y = -2.5f;
+        } else
+        {
+            velocity.x *= 0.8f;
+            velocity.y *= -0.8f;
+            velocity.z *= 0.8f;
+            acceleration.y = 0.0f;
+        }
+        super.update(dt);
+    }
+
     override void draw(Camera cam)
     {
         if(info.shadowed)
@@ -139,10 +154,10 @@ abstract class Sprite : LuaEntity
         mat.scale(scale.x, scale.y, scale.z);
 
         // skew y axis along z axis.
-        Vec4 pos = cam.basisMatrix * Vec4(position.x, position.y, position.z, 1.0f) ;
+        Vec4 pos = cam.basis * Vec4(position.x, position.y, position.z, 1.0f) ;
         mat.translate(cast(Vec3) pos);
 
-        mat = cam.getMatrix() * mat;
+        mat = cam.transformation * mat;
         program.uniform(Shader.VERTEX_SHADER, 0, (float[16]).sizeof, true, mat.ptr);
         program.texture(Shader.FRAGMENT_SHADER, 0, *info.getTexture(_frame, _side));
         program.draw(Mesh.getUnitQuad().getVertexBuffer());

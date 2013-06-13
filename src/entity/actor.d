@@ -104,6 +104,14 @@ class Actor : Sprite
             cam.position = position + Vec3(0.0f, 3.5f, 5.0f);
         }
 
+        for(int i = 0; i < 4; i++)
+        {
+            if(_inventory[i])
+            {
+                _inventory[i].draw(cam);
+            }
+        }
+
         super.draw(cam);
     }
 
@@ -114,15 +122,27 @@ class Actor : Sprite
         {
             if(item.info.holdable)
             {
+                drop(0);
                 _inventory[0] = item;
+                registry.remove(item);
                 //item.destroy();     
             }
+        }
+    }
+
+    void drop(int item)
+    {
+        if(_inventory[item])
+        {
+            registry.append(cast(Entity) _inventory[item]);
+            _inventory[item] = null;
         }
     }
 
 
     override void update(float dt)
     {
+        Vec3 tmp = position;
         if(this == focus) // we are the main character! control!!!!
         {
             if(glfwGetKey('1'))
@@ -146,7 +166,6 @@ class Actor : Sprite
             }
 
             side = 0;
-            frame = 0; //TODO
             if(glfwGetKey(GLFW_KEY_LEFT))
             {
                 position.x -= 0.05f;
@@ -168,13 +187,14 @@ class Actor : Sprite
             {
                 position.z -= 0.05f;
                 side = 1;
-                frame = 1; //TODO
             }
 
-            if(glfwGetKey('z'))
+            if(glfwGetKey('Z'))
             {
                 if(_inventory[_selectedItem])
                 {
+                    _inventory[_selectedItem].velocity = Vec3(1, 0, 0);
+                    drop(_selectedItem);
                     //TODO: attack, use, etc   
                 }
             }
@@ -183,7 +203,7 @@ class Actor : Sprite
         
         if(_inventory[0])
         {
-            _inventory[0].position = position + Vec3(0.3f,0.5f, (-0.2f * side) + 0.1f);
+            _inventory[0].position = position + Vec3(0.3f, 0.5f, -side * 0.1f + 0.05f);
             _inventory[0].side = side;
         }
 

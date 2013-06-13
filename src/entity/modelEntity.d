@@ -70,7 +70,7 @@ class ModelEntity : LuaEntity
         // now all the models are all slanty!
         Matrix4 mat;
         mat.translate(position); 
-        mat = cam.getMatrix * mat * cam.basisMatrix;
+        mat = cam.transformation * mat * cam.basis;
         program.uniform(Shader.VERTEX_SHADER, 1, (float[16]).sizeof, true, mat.ptr);
         program.texture(Shader.FRAGMENT_SHADER, 0, info._texture);
 

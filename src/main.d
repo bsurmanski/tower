@@ -6,6 +6,7 @@ import c.gl.glext;
 import gl.glb.glb;
 
 import std.stdio;
+import std.math;
 
 import lua.state;
 import lua.luaModule;
@@ -55,6 +56,7 @@ void init(int w, int h)
     running = true;
 
     cam = new Camera();
+    cam.basis = Matrix4().skewedy(-PI / 4);
     //cam.position = Vec3(0.0f, 1.5f, 0.0f);
 
     //TODO load tiles

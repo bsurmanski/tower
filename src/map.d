@@ -128,7 +128,7 @@ struct Map
         //glDisable(GL_DEPTH_TEST);
         //glDisable(GL_CULL_FACE);
         Matrix4 mat;
-        mat = cam.getMatrix();
+        mat = cam.transformation;
 
         program.uniform(Shader.VERTEX_SHADER, 0, (float[16]).sizeof, true, mat.ptr);
         program.texture(Shader.FRAGMENT_SHADER, 0, textureArray);

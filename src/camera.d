@@ -30,7 +30,7 @@ class Camera
     this()
     {
         _pmatrix = Matrix4(-1, 1, -1, 1, 1, 1677216); 
-        _basis = Matrix4().skewedy(-PI / 4);
+        _pvdirty = true;
     }
 
     @property
@@ -52,29 +52,23 @@ class Camera
 
     }
 
-    Matrix4 perspectiveMatrix()
-    {
-        return _pmatrix;
-    }
+    @property Matrix4 basis() { return _basis; }
+    @property void basis(Matrix4 m) { _basis = m; }
 
-    Matrix4 viewMatrix()
-    {
-        return _vmatrix;
-    }
+    @property Matrix4 perspective() { return _pmatrix; }
+    @property void perspective(Matrix4 m) { _pmatrix = m; }
 
-    Matrix4 getMatrix()
+    @property Matrix4 view() { return _vmatrix; }
+    @property void view(Matrix4 m) { _vmatrix = m; }
+
+    @property Matrix4 transformation() 
     {
         if(_pvdirty)
         {
             _pvmatrix = _pmatrix * _vmatrix;
             _pvdirty = false;
         }
-
-        return _pvmatrix;
+        return _pvmatrix; 
     }
 
-    Matrix4 basisMatrix()
-    {
-        return _basis; 
-    }
 }
