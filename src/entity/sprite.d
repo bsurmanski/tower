@@ -124,12 +124,13 @@ abstract class Sprite : LuaEntity
     {
         if(position.y > 0)
         {
-            acceleration.y = -2.5f;
+            acceleration.y = -3.0f;
         } else
         {
-            velocity.x *= 0.8f;
-            velocity.y *= -0.8f;
-            velocity.z *= 0.8f;
+            position.y = 0;
+            velocity.x *= 0.7f;
+            velocity.y *= -0.5f;
+            velocity.z *= 0.7f;
             acceleration.y = 0.0f;
         }
         super.update(dt);

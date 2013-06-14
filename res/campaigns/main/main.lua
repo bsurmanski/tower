@@ -25,3 +25,5 @@ Model.new(Fountain):moveTo(3, 0, 1);
 Model.new(Fountain):moveTo(5, 0, 4);
 
 Item.new(FLOWER):moveTo(6, 0, 7);
+
+Item.new(POT, 8, 0, 5);

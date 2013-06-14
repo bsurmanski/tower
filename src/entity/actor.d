@@ -53,11 +53,18 @@ class Actor : Sprite
     uint _wealthmax;
     uint _wealth;
 
+    //facing left(-1) vs right(1)
+    //facing back(-1) vs front(1)
+    HVec3 _face;
+
     @property uint wealth() { return _wealth; }
     @property void wealth(uint nwealth) { _wealth = min(_wealthmax, nwealth); }
     @property ref uint health() { return _health; }
     @property ref uint healthmax() { return _healthmax; }
     @property ref ubyte selectedItem() { return _selectedItem; }
+
+    @property void face(HVec3 v) { _face = v; }
+    @property HVec3 face() { return _face; }
 
     this(int id)
     {
@@ -120,7 +127,7 @@ class Actor : Sprite
         super.collide(other, dt);
         if(Item item = cast(Item) other)
         {
-            if(item.info.holdable)
+            if(item.info.holdable && !glfwGetKey('Z'))
             {
                 drop(0);
                 _inventory[0] = item;
@@ -170,30 +177,34 @@ class Actor : Sprite
             {
                 position.x -= 0.05f;
                 scale.x = -1;
+                _face.x = -1;
             }
 
             if(glfwGetKey(GLFW_KEY_DOWN))
             {
                 position.z += 0.05f;
+                _face.z = 1;
             }
 
             if(glfwGetKey(GLFW_KEY_RIGHT))
             {
                 position.x += 0.05f;
                 scale.x = 1;
+                _face.x = 1;
             }
 
             if(glfwGetKey(GLFW_KEY_UP))
             {
                 position.z -= 0.05f;
                 side = 1;
+                _face.z = -1;
             }
 
             if(glfwGetKey('Z'))
             {
                 if(_inventory[_selectedItem])
                 {
-                    _inventory[_selectedItem].velocity = Vec3(1, 0, 0);
+                    _inventory[_selectedItem].velocity = Vec3(face.x * 5, 2, 0);
                     drop(_selectedItem);
                     //TODO: attack, use, etc   
                 }

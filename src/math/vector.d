@@ -98,6 +98,7 @@ mixin template TVecN(uint N, T)
         }
     }
 
+    /*
     void opAssign(ref const T[] arr)
     in {
         assert(arr.length == N); 
@@ -118,6 +119,14 @@ mixin template TVecN(uint N, T)
     void opAssign(const TVECN rhs)
     {
         this.v = rhs.v.dup;
+    }*/
+
+    void opAssign(U)(TVec!(N,U) v)
+    {
+        for(int i = 0; i < N; i++)
+        {
+            v[i] = cast(T) v[i];
+        }
     }
 
     T opIndex(int index) const
@@ -295,7 +304,10 @@ struct TVec3(T)
 {
     mixin TVecN!(3, T);
 
-    this(T)(T x, T y, T z)
+    this(UX, UY, UZ)(UX x, UY y, UZ z)
+    if(isImplicitlyConvertible!(UX, T) &&
+       isImplicitlyConvertible!(UY, T) &&
+       isImplicitlyConvertible!(UZ, T))
     {
         v[0] = x;
         v[1] = y;
@@ -313,6 +325,7 @@ struct TVec3(T)
     {
         v = arr.dup;
     }
+
 
     this(T)(TVec2!T vec)
     {
