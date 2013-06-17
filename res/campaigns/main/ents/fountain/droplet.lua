@@ -16,6 +16,7 @@ local DROPLET_ITEM = {
         self:velocity((math.random() - 0.5),
                       1.5,
                       (math.random() - 0.5));
+        self:vrotation(4 * (math.random() - 0.5))
     end,
 
     Update = function(self, dt)

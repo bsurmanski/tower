@@ -25,7 +25,7 @@ struct Grid(T)
     {
         _w = w;
         _h = h;
-        _values = vals.dup;
+        _values = vals;
         _values.length = (w * h);
     }
 

@@ -37,6 +37,7 @@ struct Map
 
     Grid!Tile tiles;
 
+    Mesh walls;
     Mesh mesh;
     Texture textureArray;
 
@@ -54,7 +55,7 @@ struct Map
 
         this.w = w;
         this.h = h;
-        this.tiles = Grid!Tile(w, h, tiles);//= tiles.dup;
+        this.tiles = Grid!Tile(w, h, tiles.dup);
         
         textureArray = Texture(Texture.RGBA, 16, 16, 16, 
                                    [
@@ -125,8 +126,6 @@ struct Map
 
     void draw(Camera cam)
     {
-        //glDisable(GL_DEPTH_TEST);
-        //glDisable(GL_CULL_FACE);
         Matrix4 mat;
         mat = cam.transformation;
 

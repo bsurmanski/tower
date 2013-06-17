@@ -111,6 +111,7 @@ class Actor : Sprite
         {
             if(item.info.holdable && !glfwGetKey('Z') && _inventory[0] is null)
             {
+                item.rotation = 0;
                 _inventory[0] = item;
                 item.phys = false;
             }
@@ -180,13 +181,20 @@ class Actor : Sprite
                 _face.z = -1;
             }
 
-            if(glfwGetKey('Z'))
+            //attack
+            if(glfwGetKey('X'))
+            {
+        
+            }
+
+            //throw
+            if(glfwGetKey('C'))
             {
                 if(_inventory[_selectedItem])
                 {
                     _inventory[_selectedItem].velocity = Vec3(face.x * 5, 2, 0);
+                    _inventory[selectedItem].vrotation = 4.0f * -_face.x;
                     drop(_selectedItem);
-                    //TODO: attack, use, etc   
                 }
             }
         }

@@ -10,6 +10,9 @@ M.__init = function()
         Sprite = ENT_FOLDER .. "/pot/frag1.tga",
         Name = "Fragment",
         Description = "Look out! a sharp fragment!",
+        New = function(self)
+            self:vrotation((math.random() - 0.5) * 10)
+        end,
         Update = function(self, dt)
             if(self:position():y() <= 0) then
                 self:destroy()
@@ -22,6 +25,9 @@ M.__init = function()
         Sprite = ENT_FOLDER .. "/pot/frag2.tga",
         Name = "Fragment",
         Description = "Look out! a sharp fragment!",
+        New = function(self)
+            self:vrotation((math.random() - 0.5) * 10)
+        end,
         Update = function(self, dt)
             if(self:position():y() <= 0) then
                 self:destroy()
@@ -34,6 +40,9 @@ M.__init = function()
         Sprite = ENT_FOLDER .. "/pot/frag3.tga",
         Name = "Fragment",
         Description = "Look out! a sharp fragment!",
+        New = function(self)
+            self:vrotation((math.random() - 0.5) * 10)
+        end,
         Update = function(self, dt)
             if(self:position():y() <= 0) then
                 self:destroy()
@@ -46,6 +55,9 @@ M.__init = function()
         Sprite = ENT_FOLDER .. "/pot/frag4.tga",
         Name = "Fragment",
         Description = "Look out! a sharp fragment!",
+        New = function(self)
+            self:vrotation((math.random() - 0.5) * 10)
+        end,
         Update = function(self, dt)
             if(self:position():y() <= 0) then
                 self:destroy()

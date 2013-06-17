@@ -74,6 +74,7 @@ abstract class Entity
     bool phys = true;
     int type;
     float rotation;
+    float vrotation;
     Vec3 position;
     Vec3 velocity;
     Vec3 acceleration;
@@ -90,6 +91,7 @@ abstract class Entity
         acceleration = Vec3(0,0,0);
         scale = Vec3(1,1,1);
         rotation = 0.0f;
+        vrotation = 0.0f;
         _info = EntityInfo.get(type);
 
         bounds.radius = 0.2;
@@ -114,6 +116,7 @@ abstract class Entity
     {
         if(phys)
         {
+            rotation += vrotation * dt;
             velocity += acceleration * dt; //TODO RK4 integration. move up
             position += velocity * dt;
         }

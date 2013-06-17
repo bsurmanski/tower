@@ -129,6 +129,7 @@ abstract class Sprite : LuaEntity
             {
                 //bounce
                 position.y = 0;
+                vrotation *= 0.7f;
                 velocity.x *= 0.7f;
                 velocity.y *= -0.5f;
                 velocity.z *= 0.7f;
@@ -145,16 +146,15 @@ abstract class Sprite : LuaEntity
             this.drawShadow(cam, program);
         }
 
-        try{
         const(int) *texturesz = (*info._texture[_frame]).size();
-        }catch{
-            writeln(); 
-        }
         Matrix4 mat; 
-        mat.translate(0, 1, 0); //center sprite at bottom
-        mat.rotate(-PI / 4.0f, 1.0f, 0, 0); //face sprite towards screen
+
         mat.scale(info._width / 32.0f, info._height / 32.0f, info._height / 32.0f, 1.0f);
         mat.scale(scale.x, scale.y, scale.z);
+
+        mat.rotate(rotation, 0, 0, 1); //rotate sprite about center
+        mat.translate(0, info._height / 32.0f, 0); //center sprite at bottom
+        mat.rotate(-PI / 4.0f, 1.0f, 0, 0); //face sprite towards screen
 
         // skew y axis along z axis.
         Vec4 pos = cam.basis * Vec4(position.x, position.y, position.z, 1.0f) ;

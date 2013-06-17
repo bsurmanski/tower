@@ -28,6 +28,8 @@ immutable Api libentity = {
         {"position", &libentity_position},
         {"velocity", &libentity_velocity},
         {"acceleration", &libentity_acceleration},
+        {"rotation", &libentity_rotation},
+        {"vrotation", &libentity_vrotation},
     ],
     []
 };
@@ -127,6 +129,30 @@ int libentity_acceleration(lua_State *l)
     lua_getglobal(l, "Vector");
     lua_setmetatable(l, -2);
 
+    return 1;
+}
+
+int libentity_rotation(lua_State *l)
+{
+    Entity ent = cast(Entity) lua_touserdata(l, 1);
+    if(lua_isnumber(l, 2))
+    {
+        float r = lua_tonumber(l, 2);
+        ent.rotation = r;
+    }
+    lua_push(l, ent.rotation);
+    return 1;
+}
+
+int libentity_vrotation(lua_State *l)
+{
+    Entity ent = cast(Entity) lua_touserdata(l, 1);
+    if(lua_isnumber(l, 2))
+    {
+        float r = lua_tonumber(l, 2);
+        ent.vrotation = r;
+    }
+    lua_push(l, ent.vrotation);
     return 1;
 }
 
