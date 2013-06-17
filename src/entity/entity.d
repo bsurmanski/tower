@@ -71,6 +71,7 @@ abstract class Entity
     static List!Entity registry;
 
     bool marked = false;
+    bool phys = true;
     int type;
     float rotation;
     Vec3 position;
@@ -111,8 +112,11 @@ abstract class Entity
     void collide(Entity other, float dt);
     void update(float dt)
     {
-        velocity += acceleration * dt; //TODO RK4 integration. move up
-        position += velocity * dt;
+        if(phys)
+        {
+            velocity += acceleration * dt; //TODO RK4 integration. move up
+            position += velocity * dt;
+        }
     }
     //void input(
     
@@ -130,7 +134,7 @@ abstract class Entity
                     if(e == e2) break;
                     if(e.bounds.collides(e2.bounds) && !e2.marked)
                     {
-                        e.collide(e2, dt);
+                        e.collide(e2, dt); //TODO: allow for e to be removed without breaking
                         e2.collide(e, dt);
                     }
                 }
@@ -142,7 +146,7 @@ abstract class Entity
         {
             if(it.value.marked)
             {
-                destroy(it.value);
+                //destroy(it.value);
                 auto rmv = it;
                 it = it.next();
                 Entity ent = registry.remove(rmv); 
@@ -164,6 +168,11 @@ abstract class Entity
         {
             e.draw(cam);
         }
+    }
+
+    void destroy()
+    {
+        this.marked = true; 
     }
 
     void drawShadow(Camera cam, ref Program program)

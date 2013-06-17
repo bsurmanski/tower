@@ -107,9 +107,7 @@ abstract class Sprite : LuaEntity
         if(!init)
         {
             init = true;
-            program = Program();
-            program.source("res/glsl/drawtexture.vs", Shader.VERTEX_SHADER);
-            program.source("res/glsl/drawtexture.fs", Shader.FRAGMENT_SHADER);
+            program = Program("res/glsl/drawtexture.vs", "res/glsl/drawtexture.fs");
         }
 
         super(id);
@@ -122,16 +120,20 @@ abstract class Sprite : LuaEntity
 
     override void update(float dt)
     {
-        if(position.y > 0)
+        if(phys)
         {
-            acceleration.y = -3.0f;
-        } else
-        {
-            position.y = 0;
-            velocity.x *= 0.7f;
-            velocity.y *= -0.5f;
-            velocity.z *= 0.7f;
-            acceleration.y = 0.0f;
+            if(position.y > 0)
+            {
+                acceleration.y = -3.0f;
+            } else if(velocity.y < 0)
+            {
+                //bounce
+                position.y = 0;
+                velocity.x *= 0.7f;
+                velocity.y *= -0.5f;
+                velocity.z *= 0.7f;
+                acceleration.y = 0.0f;
+            }
         }
         super.update(dt);
     }

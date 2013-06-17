@@ -17,7 +17,7 @@ import math.matrix;
 import entity.entity;
 import entity.modelEntity;
 import ui.hud.hud;
-import map;
+import map.map;
 import camera;
 
 GLuint primQuery;
@@ -102,6 +102,12 @@ void update()
 
     hud_display.update(dt);
     Entity.updateAll(dt);
+
+    import entity.actor;
+    if(Actor.focus)
+    {
+        cam.position = Actor.focus.position + Vec3(0.0f, 3.5f, 5.0f); 
+    }
 }
 
 void finalize()

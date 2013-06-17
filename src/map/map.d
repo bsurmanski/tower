@@ -5,7 +5,7 @@
  * Brandon Surmanski
  */
 
-module map;
+module map.map;
 
 import std.math;
 import std.stdio;

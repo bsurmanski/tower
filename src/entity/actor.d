@@ -104,35 +104,15 @@ class Actor : Sprite
         return "Actor";
     }
 
-    override void draw(Camera cam)
-    {
-        if(this == focus) //TODO move to update. provide some way to get main camera from there
-        {
-            cam.position = position + Vec3(0.0f, 3.5f, 5.0f);
-        }
-
-        for(int i = 0; i < 4; i++)
-        {
-            if(_inventory[i])
-            {
-                _inventory[i].draw(cam);
-            }
-        }
-
-        super.draw(cam);
-    }
-
     override void collide(Entity other, float dt)
     {
         super.collide(other, dt);
         if(Item item = cast(Item) other)
         {
-            if(item.info.holdable && !glfwGetKey('Z'))
+            if(item.info.holdable && !glfwGetKey('Z') && _inventory[0] is null)
             {
-                drop(0);
                 _inventory[0] = item;
-                registry.remove(item);
-                //item.destroy();     
+                item.phys = false;
             }
         }
     }
@@ -141,7 +121,7 @@ class Actor : Sprite
     {
         if(_inventory[item])
         {
-            registry.append(cast(Entity) _inventory[item]);
+            _inventory[item].phys = true;
             _inventory[item] = null;
         }
     }

@@ -23,11 +23,16 @@ M.__init = function()
                 for i = 0, 5, 1 do
                     fragindex = math.random(1, 4) -- 1 to 4
                     fragtype = fragtypes[fragindex]
-                    frag = Item.new(fragtype, pos:x(), 0.05, pos:z());
-                    frag:velocity(math.random(-1.0, 1.0), 
-                                  math.random(1.0, 2.0), 
-                                  math.random(-1.0, 1.0))
+                    frag = Item.new(fragtype, pos:x(), pos:y(), pos:z());
+                    frag:velocity(4 * math.random() - 2, 
+                                  1 + math.random(), 
+                                  4 * math.random() - 2)
                 end
+
+                frag = Item.new(fragtype, pos:x(), 0.05, pos:z());
+                frag:velocity(4 * math.random() - 2, 
+                              1 + math.random(), 
+                              4 * math.random() - 2)
                 self:destroy()
             end
         end

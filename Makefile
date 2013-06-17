@@ -1,7 +1,8 @@
 SRC=src/main.d \
 	src/camera.d \
 	src/keys.d\
-	src/map.d\
+	src/map/map.d\
+	src/map/wall.d\
 	src/container/geom/mesh.d\
 	src/container/geom/model.d\
 	src/container/geom/grid.d\

@@ -326,7 +326,6 @@ struct TVec3(T)
         v = arr.dup;
     }
 
-
     this(T)(TVec2!T vec)
     {
         v[0..size] = [vec.v[0..2], cast(T) 0];
