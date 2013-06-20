@@ -26,8 +26,11 @@ if(is(Entity == T) || is(LuaEntity == T)) //TODO: change to all classes dirived 
 {
     import entity.actor;
     import entity.item;
+    import entity.modelEntity;
     import std.stdio;
-    lua_pushlightuserdata(l, cast(void*) value);
+    //lua_pushlightuserdata(l, cast(void*) value);
+    Entity *ent = cast(Entity*) lua_newuserdata(l, (Entity).sizeof);
+    *ent = value;
     if(cast(Actor) value)
     {
         lua_getglobal(l, "Actor");
@@ -36,9 +39,19 @@ if(is(Entity == T) || is(LuaEntity == T)) //TODO: change to all classes dirived 
     {
         lua_getglobal(l, "Item");
         lua_setmetatable(l, -2);
-    } else
+    } else if (cast(ModelEntity) value)
+    {
+        lua_getglobal(l, "Model");
+        lua_setmetatable(l, -2);
+    }else
     {
         lua_getglobal(l, "Entity");
         lua_setmetatable(l, -2);
     }
+}
+
+T lua_to(T)(lua_State *l, int index)
+if(is(Entity == T) || is(LuaEntity == T)) //TODO: change to all classes dirived from Entity
+{
+    return (*cast(Entity*) lua_touserdata(l, index));
 }

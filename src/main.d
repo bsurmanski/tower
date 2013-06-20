@@ -71,6 +71,9 @@ void init(int w, int h)
     state.run("res/campaigns/main/ents/");
     state.run("res/campaigns/main/main.lua");
 
+    auto ent = new ModelEntity(state.state, "res/mdl/roomtest.mdl", "res/tex/roomtest.tga");
+
+
     hud_display = new Hud();
 }
 

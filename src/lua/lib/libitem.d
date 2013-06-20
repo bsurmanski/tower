@@ -8,6 +8,8 @@ import gl.glb.glb;
 import lua.api;
 import lua.luah;
 import lua.lib.libentity;
+import lua.lib.libentity_tmpl;
+import entity.entity;
 import entity.item;
 import math.vector;
 
@@ -57,11 +59,7 @@ static int libitem_new(lua_State *l)
 {
     int typeId = cast(int) lua_tointeger(l, 1);
     Item ent = new Item(typeId);
-    lua_pushlightuserdata(l, cast(void*) ent);
-
-    int entindex = lua_gettop(l);
-    lua_getglobal(l, "Item"); //set metatable for actor
-    lua_setmetatable(l, entindex);
+    lua_push(l, cast(Entity) ent);
 
     if(lua_isnumber(l, 2) && lua_isnumber(l, 3) && lua_isnumber(l, 4))
     {

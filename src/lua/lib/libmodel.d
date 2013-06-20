@@ -7,7 +7,9 @@ import gl.glb.glb;
 import lua.api;
 import lua.luah;
 import entity.modelEntity;
+import entity.entity;
 import lua.lib.libentity;
+import lua.lib.libentity_tmpl;
 
 immutable Api libmodel = {
     "Model",
@@ -44,10 +46,6 @@ static int libmodel_new(lua_State *l)
 {
     int typeId = cast(int) lua_tointeger(l, 1);
     auto ent = new ModelEntity(typeId);
-    lua_pushlightuserdata(l, cast(void*) ent);
-
-    int entindex = lua_gettop(l);
-    lua_getglobal(l, "Model"); //set metatable 
-    lua_setmetatable(l, entindex);
+    lua_push(l, cast(Entity) ent);
     return 1;
 }

@@ -23,7 +23,6 @@ M.__init = function()
         },
         Name = "Tash",
         Description = "The main character!",
-        Update = test,
         Update = function(self, dt)
             self:health(self.wealth);
             if(not (Actor.focus() == self)) then 

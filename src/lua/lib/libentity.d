@@ -21,6 +21,7 @@ import lua.luah;
 immutable Api libentity = {
     "Entity",
     [
+        {"__eq", &libentity___eq},
         {"move", &libentity_move},
         {"moveTo", &libentity_moveTo},
         {"info", &libentity_info},
@@ -36,9 +37,17 @@ immutable Api libentity = {
 
 extern (C):
 
+int libentity___eq(lua_State *l)
+{
+    Entity ent1 = cast(Entity) lua.lib.libentity_tmpl.lua_to!Entity(l, 1);
+    Entity ent2 = cast(Entity) lua.lib.libentity_tmpl.lua_to!Entity(l, 2);
+    lua_pushboolean(l, ent1 == ent2);
+    return 1;
+}
+
 int libentity_move(lua_State *l)
 {
-    Entity ent = cast(Entity) lua_touserdata(l, 1);
+    Entity ent = cast(Entity) lua.lib.libentity_tmpl.lua_to!Entity(l, 1);
     Vec3 offset;
     offset.x = lua_tonumber(l, 2);
     offset.y = lua_tonumber(l, 3);
@@ -53,7 +62,7 @@ int libentity_move(lua_State *l)
 
 int libentity_moveTo(lua_State *l)
 {
-    Entity ent = cast(Entity) lua_touserdata(l, 1);
+    Entity ent = cast(Entity) lua.lib.libentity_tmpl.lua_to!Entity(l, 1);
     Vec3 offset;
     offset.x = lua_tonumber(l, 2);
     offset.y = lua_tonumber(l, 3);
@@ -68,7 +77,7 @@ int libentity_moveTo(lua_State *l)
 
 int libentity_position(lua_State *l)
 {
-    Entity ent = cast(Entity) lua_touserdata(l, 1);
+    Entity ent = cast(Entity) lua.lib.libentity_tmpl.lua_to!Entity(l, 1);
     if(lua_isuserdata(l, 2))
     {
         Vec3 *newpos = cast(Vec3*) lua_touserdata(l, 2);
@@ -90,7 +99,7 @@ int libentity_position(lua_State *l)
 
 int libentity_velocity(lua_State *l)
 {
-    Entity ent = cast(Entity) lua_touserdata(l, 1);
+    Entity ent = cast(Entity) lua.lib.libentity_tmpl.lua_to!Entity(l, 1);
     if(lua_isuserdata(l, 2))
     {
         Vec3 *newvec = cast(Vec3*) lua_touserdata(l, 2);
@@ -112,7 +121,7 @@ int libentity_velocity(lua_State *l)
 
 int libentity_acceleration(lua_State *l)
 {
-    Entity ent = cast(Entity) lua_touserdata(l, 1);
+    Entity ent = cast(Entity) lua.lib.libentity_tmpl.lua_to!Entity(l, 1);
     if(lua_isuserdata(l, 2))
     {
         Vec3 *newvec = cast(Vec3*) lua_touserdata(l, 2);
@@ -134,7 +143,7 @@ int libentity_acceleration(lua_State *l)
 
 int libentity_rotation(lua_State *l)
 {
-    Entity ent = cast(Entity) lua_touserdata(l, 1);
+    Entity ent = cast(Entity) lua.lib.libentity_tmpl.lua_to!Entity(l, 1);
     if(lua_isnumber(l, 2))
     {
         float r = lua_tonumber(l, 2);
@@ -146,7 +155,7 @@ int libentity_rotation(lua_State *l)
 
 int libentity_vrotation(lua_State *l)
 {
-    Entity ent = cast(Entity) lua_touserdata(l, 1);
+    Entity ent = cast(Entity) lua.lib.libentity_tmpl.lua_to!Entity(l, 1);
     if(lua_isnumber(l, 2))
     {
         float r = lua_tonumber(l, 2);
@@ -158,7 +167,7 @@ int libentity_vrotation(lua_State *l)
 
 int libentity_info(lua_State *l)
 {
-    Entity ent = cast(Entity) lua_touserdata(l, 1);
+    Entity ent = cast(Entity) lua.lib.libentity_tmpl.lua_to!Entity(l, 1);
     lua_pushlightuserdata(l, cast(void*) ent.info);
     lua_gettable(l, LUA_REGISTRYINDEX);
     return 1;
@@ -166,7 +175,7 @@ int libentity_info(lua_State *l)
 
 int libentity_destroy(lua_State *l)
 {
-    Entity ent = cast(Entity) lua_touserdata(l, 1);
+    Entity ent = cast(Entity) lua.lib.libentity_tmpl.lua_to!Entity(l, 1);
     ent.destroy();
     return 0;
 }

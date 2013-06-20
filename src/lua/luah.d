@@ -75,11 +75,12 @@ if(isPointer!T)
     return cast(T) lua_topointer(l, index); 
 }
 
+/*
 T lua_to(T)(lua_State *l, int index)
 if(is(T == class))
 {
-    return cast(T) lua_tolightuserdata(l, index);
-}
+    return cast(T) lua_touserdata(l, index);
+}*/
 
 /*
  * lua push

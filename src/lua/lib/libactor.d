@@ -17,6 +17,7 @@ import lua.luah;
 import entity.entity;
 import entity.actor;
 import lua.lib.libentity;
+import lua.lib.libentity_tmpl;
 
 immutable Api libactor = {
     "Actor",
@@ -53,17 +54,20 @@ int libactor_focus(lua_State *l)
 {
     if(lua_isuserdata(l, 1))
     {
-        Actor ent = cast(Actor) lua_touserdata(l, 1);
+        Actor ent = cast(Actor) lua.lib.libentity_tmpl.lua_to!Entity(l, 1);
         Actor.focus = ent;
     }
 
-    lua_pushlightuserdata(l, cast(void*) Actor.focus);
+    Actor *luaent = cast(Actor*) lua_newuserdata(l, (Actor).sizeof);
+    *luaent = Actor.focus;
+    lua_getglobal(l, "Actor"); //set metatable for actor
+    lua_setmetatable(l, -2);
     return 1;
 }
 
 int libactor_health(lua_State *l)
 {
-    Actor actor = cast(Actor)cast(Entity)lua_touserdata(l, 1);
+    Actor actor = cast(Actor) lua.lib.libentity_tmpl.lua_to!Entity(l, 1);
     if(!actor){return 0;}
 
     if(lua_isnumber(l, 2))
@@ -77,7 +81,7 @@ int libactor_health(lua_State *l)
 
 int libactor_wealth(lua_State *l)
 {
-    Actor actor = cast(Actor)cast(Entity)lua_touserdata(l, 1);
+    Actor actor = cast(Actor) lua.lib.libentity_tmpl.lua_to!Entity(l, 1);
     if(!actor){return 0;}
 
     if(lua_isnumber(l, 2))
@@ -93,8 +97,6 @@ int libactor_new(lua_State *l)
 {
     int typeId = cast(int) lua_tointeger(l, 1);
     Actor ent = new Actor(typeId);
-    lua_pushlightuserdata(l, cast(void*) ent);
-    lua_getglobal(l, "Actor"); //set metatable for actor
-    lua_setmetatable(l, -2);
+    lua_push(l, cast(Entity) ent);
     return 1;
 }
