@@ -10,6 +10,7 @@ module entity.modelEntity;
 import std.math;
 
 import c.lua;
+import c.gl.gl;
 import gl.glb.glb;
 
 import math.matrix;
@@ -49,6 +50,13 @@ class ModelEntity : LuaEntity
     static Program program;
     static Sampler sampler = void;
 
+    //one off models
+    this(lua_State *state, string model, string texture)
+    {
+        ModelInfo info = new ModelInfo(state, model, texture);
+        this(info.id);
+    }
+
     this(int id)
     {
         super(id);
@@ -68,6 +76,7 @@ class ModelEntity : LuaEntity
     override void draw(Camera cam)
     {
         // now all the models are all slanty!
+        glEnable(GL_CULL_FACE);
         Matrix4 mat;
         mat.translate(position); 
         mat = cam.transformation * mat * cam.basis;
@@ -78,6 +87,7 @@ class ModelEntity : LuaEntity
         {
             program.draw(mesh.getVertexBuffer(), mesh.getIndexBuffer()); 
         }
+        glDisable(GL_CULL_FACE);
     }
 
     override void update(float dt)

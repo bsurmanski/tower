@@ -182,9 +182,14 @@ class Actor : Sprite
             }
 
             //attack
+            if(_inventory[_selectedItem])
+            _inventory[_selectedItem].rotation = 0.0f;
             if(glfwGetKey('X'))
             {
-        
+                if(_inventory[_selectedItem])
+                {
+                    _inventory[_selectedItem].rotation = 0.5f * -_face.x;
+                }
             }
 
             //throw

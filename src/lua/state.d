@@ -155,7 +155,7 @@ class State
             {
                 if(mod.isDir)
                 {
-                    foreach(lua; filter!`a.name.endsWith(".lua")`(dirEntries(mod.name, SpanMode.shallow)))
+                    foreach(lua; filter!`a.name.endsWith(".lua")`(dirEntries(mod.name, SpanMode.depth)))
                     {
                         LuaModule lmod = new LuaModule(this, lua);
                     }
