@@ -71,7 +71,7 @@ void init(int w, int h)
     state.run("res/campaigns/main/ents/");
     state.run("res/campaigns/main/main.lua");
 
-    auto ent = new ModelEntity(state.state, "res/mdl/roomtest.mdl", "res/tex/roomtest.tga");
+    auto ent = new ModelEntity(state.state, "res/mdl/testroom.mdl", "res/tex/testroom.tga");
 
 
     hud_display = new Hud();
@@ -80,7 +80,7 @@ void init(int w, int h)
 void draw()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    testmap.draw(cam);
+    //testmap.draw(cam);
     Entity.drawAll(cam);
     hud_display.draw();
 
