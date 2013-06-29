@@ -11,6 +11,7 @@ import std.stdio;
 import std.math;
 
 import math.vector;
+import math.quat;
 
 struct Matrix4
 {
@@ -361,6 +362,45 @@ struct Matrix4
         }
 
 /*}}}*/
+
+        Quat quaternion()
+        {
+            Quat ret;
+            if(xx + yy + zz > 0.0f)
+            {
+                float t = xx + yy + zz + 1.0f;
+                float s = 0.5f / sqrt(t);
+                ret.w = s * t; 
+                ret.z = (yx - xy) * s;
+                ret.y = (xz - zx) * s;
+                ret.x = (zy - yz) * s;
+            } else if(xx + yy + xx > zz)
+            {
+                float t = xx - yy - zz + 1.0f;
+                float s = 0.5f / sqrt(t);
+                ret.w = s * t; 
+                ret.z = (yx + xy) * s;
+                ret.y = (xz + zx) * s;
+                ret.x = (zy - yz) * s;
+            } else if(yy > zz)
+            {
+                float t = -xx + yy - zz + 1.0f;
+                float s = 0.5f / sqrt(t);
+                ret.w = s * t; 
+                ret.z = (yx + xy) * s;
+                ret.y = (xz - zx) * s;
+                ret.x = (zy + yz) * s;
+            } else
+            {
+                float t = -xx - yy + zz + 1.0f;
+                float s = 0.5f / sqrt(t);
+                ret.w = s * t; 
+                ret.z = (yx + xy) * s;
+                ret.y = (xz - zx) * s;
+                ret.x = (zy + yz) * s;
+            }
+            return ret;
+        }
 
         void print()
         {

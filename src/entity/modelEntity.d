@@ -22,20 +22,24 @@ import camera;
 
 class ModelInfo : LuaEntityInfo
 {
-    //Model _model;
     Mesh _meshes[];
     Texture _textures[] = [];
     Texture _texture;
-    Sampler _sampler;
 
     this(lua_State *l, string model, string texture)
     {
         _meshes ~= Mesh(model);
         _texture = Texture(0, texture);
-        _sampler = Sampler();
-        _sampler.setFilter(Sampler.NEAREST, Sampler.NEAREST);
         _texture.setSampler(&_sampler);
         super(l);
+    }
+
+    this(lua_State *l, Mesh mesh, Texture texture)
+    {
+        _meshes ~= mesh;
+        _texture = texture;
+        _texture.setSampler(&_sampler);
+        super(l); 
     }
 
     void add(Mesh mesh, Matrix4 transform = Matrix4())

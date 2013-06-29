@@ -96,7 +96,12 @@ struct Mesh
         //ibuffer = Buffer.init;
         //vbuffer = Buffer.init;
         File file = File(filenm, "r"); 
+        this(file); 
+        file.close();
+    }
 
+    this(File file)
+    {
         Header header;
         file.rawRead((&header)[0..1]);
 
@@ -104,7 +109,6 @@ struct Mesh
         faces.length = header.nfaces;
         file.rawRead(verts); 
         file.rawRead(faces);
-        file.close();
 
         vdirty = true;
         fdirty = true;

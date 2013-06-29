@@ -17,11 +17,11 @@ mainActor:wealth();
 --Item.new(GOLD):moveTo(0, 0, 6);
 --Item.new(GOLD):moveTo(2, 0, 6);
 --Item.new(SWORD):moveTo(6, 0, 6);
---Item.new(SHIELD):moveTo(7, 0, 6);
+Item.new(SHIELD):moveTo(7, 0, 6);
 
 --Model.new(Fountain):moveTo(3, 0, 1);
 --Model.new(Fountain):moveTo(5, 0, 4);
---Model.new(BED):moveTo(10, 0, 10);
+Model.new(BED):moveTo(1, 0, 1);
 
 --Item.new(FLOWER):moveTo(6, 0, 7);
 

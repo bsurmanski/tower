@@ -12,6 +12,7 @@ import lua.state;
 import lua.luaModule;
 import lua.lib.all;
 import container.geom.mesh;
+import container.phys.scene;
 import math.vector;
 import math.matrix;
 import entity.entity;
@@ -72,6 +73,8 @@ void init(int w, int h)
     state.run("res/campaigns/main/main.lua");
 
     auto ent = new ModelEntity(state.state, "res/mdl/testroom.mdl", "res/tex/testroom.tga");
+
+    Scene scene = new Scene("res/towerscene.scn");
 
 
     hud_display = new Hud();

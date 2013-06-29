@@ -80,6 +80,7 @@ abstract class Entity
     Vec3 acceleration;
     Vec3 scale;
     Ball3 bounds;
+    Entity _parent;
 
     EntityInfo _info;
 
@@ -92,6 +93,7 @@ abstract class Entity
         scale = Vec3(1,1,1);
         rotation = 0.0f;
         vrotation = 0.0f;
+        _parent = null;
         _info = EntityInfo.get(type);
 
         bounds.radius = 0.2;

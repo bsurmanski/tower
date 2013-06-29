@@ -6,6 +6,7 @@ SRC=src/main.d \
 	src/container/geom/mesh.d\
 	src/container/geom/model.d\
 	src/container/geom/grid.d\
+	src/container/phys/scene.d\
 	src/container/list.d\
 	src/lua/api.d\
 	src/lua/luah.d\
@@ -31,6 +32,7 @@ SRC=src/main.d \
 	src/entity/sprite.d\
 	src/math/matrix.d\
 	src/math/vector.d\
+	src/math/quat.d\
 	src/math/bv/box.d\
 	src/math/bv/ball.d\
 	src/ui/component.d\
