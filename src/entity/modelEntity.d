@@ -28,18 +28,18 @@ class ModelInfo : LuaEntityInfo
 
     this(lua_State *l, string model, string texture)
     {
+        super(l);
         _meshes ~= Mesh(model);
         _texture = Texture(0, texture);
         _texture.setSampler(&_sampler);
-        super(l);
     }
 
     this(lua_State *l, Mesh mesh, Texture texture)
     {
+        super(l); 
         _meshes ~= mesh;
         _texture = texture;
         _texture.setSampler(&_sampler);
-        super(l); 
     }
 
     void add(Mesh mesh, Matrix4 transform = Matrix4())
