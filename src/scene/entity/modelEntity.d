@@ -5,7 +5,7 @@
  * Brandon Surmanski
  */
 
-module entity.modelEntity;
+module scene.entity.modelEntity;
 
 import std.math;
 
@@ -14,16 +14,14 @@ import c.gl.gl;
 import gl.glb.glb;
 
 import math.matrix;
-import container.geom.model;
 import container.geom.mesh;
-import entity.luaEntity;
-import entity.entity;
-import camera;
+import scene.entity.luaEntity;
+import scene.entity.entity;
+import scene.camera;
 
 class ModelInfo : LuaEntityInfo
 {
     Mesh _meshes[];
-    Texture _textures[] = [];
     Texture _texture;
 
     this(lua_State *l, string model, string texture)

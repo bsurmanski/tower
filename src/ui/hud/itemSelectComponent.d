@@ -13,7 +13,7 @@ import ui.component;
 import ui.glbComponent;
 import ui.imageComponent;
 
-import entity.actor;
+import scene.entity.actor;
 
 class ItemSelectComponent : GlbComponent
 {

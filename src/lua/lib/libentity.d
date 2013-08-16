@@ -13,8 +13,8 @@ import c.lua;
 import lua.lib.libvector_tmpl;
 import lua.lib.libentity_tmpl;
 import math.vector;
-import entity.luaEntity;
-import entity.entity;
+import scene.entity.luaEntity;
+import scene.entity.entity;
 import lua.api;
 import lua.luah;
 

@@ -5,7 +5,7 @@
  * Brandon Surmanski
  */
 
-module camera;
+module scene.camera;
 
 import std.math;
 

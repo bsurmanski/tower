@@ -15,7 +15,7 @@ import ui.hud.wealthComponent;
 import ui.component;
 import ui.imageComponent;
 
-import entity.actor;
+import scene.entity.actor;
 
 class Hud
 {

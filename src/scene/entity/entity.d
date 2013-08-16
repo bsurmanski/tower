@@ -5,7 +5,7 @@
  * Brandon Surmanski
  */
 
-module entity.entity;
+module scene.entity.entity;
 
 import std.math;
 import std.algorithm;
@@ -15,40 +15,25 @@ import std.range;
 import c.gl.gl;
 import gl.glb.glb;
 
+import scene.scene;
 import container.geom.mesh;
 import container.list;
 import math.bv.ball;
 import math.matrix;
 import math.vector;
-import camera;
+import scene.camera;
 
 abstract class EntityInfo
 {
     static EntityInfo[] registry;
 
-    static bool _entityinit = false;
-    bool _shadowed = true;
-    static Texture _shadow = void;
-    static Sampler _sampler = void;
-
     int _id = -1;
 
     @property int id() { return _id; }
-    @property bool shadowed() { return _shadowed; }
-    @property void shadowed(bool val) { _shadowed = val; }
 
     this()
     {
         this._id = cast(int) registry.length;
-
-        if(!_entityinit)
-        {
-            _entityinit = true;
-            _sampler = Sampler();
-            _sampler.setFilter(Sampler.NEAREST, Sampler.NEAREST);
-            _shadow = Texture(0, "res/tex/shadow.tga");
-            _shadow.setSampler(&_sampler);
-        }
 
         registry ~= this;
     }
@@ -81,12 +66,12 @@ abstract class Entity
     Vec3 scale;
     Ball3 bounds;
     Entity _parent;
+    Entity _children[];
 
     EntityInfo _info;
 
-    this(int type)
+    this()
     {
-        this.type = type;
         position = Vec3(0,0,0);
         velocity = Vec3(0,0,0);
         acceleration = Vec3(0,0,0);
@@ -94,12 +79,18 @@ abstract class Entity
         rotation = 0.0f;
         vrotation = 0.0f;
         _parent = null;
-        _info = EntityInfo.get(type);
+        _info = null;
 
         bounds.radius = 0.2;
 
         registry.insertBack(this);
+    }
 
+    this(int type)
+    {
+        this.type = type;
+        _info = EntityInfo.get(type);
+        this();
     }
 
     ~this()
@@ -114,7 +105,7 @@ abstract class Entity
 
     void draw(Camera cam);
     void collide(Entity other, float dt);
-    void update(float dt)
+    void update(Scene scene, float dt)
     {
         if(phys)
         {
@@ -162,46 +153,10 @@ abstract class Entity
         }
 
         registry.sort!("a.position.z < b.position.z")();
-
-        // XXX DEBUG
-        assert(registry.sorted!("a.position.z < b.position.z")());
-    }
-
-    static void drawAll(Camera cam)
-    {
-        foreach(e; registry)
-        {
-            e.draw(cam);
-        }
     }
 
     void destroy()
     {
         this.marked = true; 
     }
-
-    void drawShadow(Camera cam, ref Program program)
-    {
-        glDisable(GL_DEPTH_TEST);
-        glDepthMask(false);
-
-        Matrix4 mat; 
-        mat.rotate(-PI / 2.0f, 1.0f, 0.0f, 0.0f);
-        const(int) *texturesz = info._shadow.size();
-        mat.scale(texturesz[0] / 32.0f, texturesz[1] / 32.0f, texturesz[1] / 32.0f);
-
-        Vec3 pos = this.position;
-        pos.y = 0;
-        mat.translate(pos);
-
-        mat = cast(Matrix4) cam.transformation * mat;
-       
-        program.uniform(Shader.VERTEX_SHADER, 0, (float[16]).sizeof, true, mat.ptr);
-        program.texture(Shader.FRAGMENT_SHADER, 0, info._shadow);
-        program.draw(Mesh.getUnitQuad().getVertexBuffer());
-
-        glDepthMask(true);
-        glEnable(GL_DEPTH_TEST);
-    }
-
 }

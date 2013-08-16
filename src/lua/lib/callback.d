@@ -16,8 +16,8 @@ import lua.lib.libvector_tmpl; // for vector push
 import c.lua;
 import lua.luah;
 import math.vector;
-import entity.entity;
-import entity.actor;
+import scene.entity.entity;
+import scene.entity.actor;
 
 /**
  * TODO: add callbacks:

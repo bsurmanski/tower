@@ -14,8 +14,8 @@ import c.lua;
 import gl.glb.glb;
 import lua.api;
 import lua.luah;
-import entity.entity;
-import entity.actor;
+import scene.entity.entity;
+import scene.entity.actor;
 import lua.lib.libentity;
 import lua.lib.libentity_tmpl;
 

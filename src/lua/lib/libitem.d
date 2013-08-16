@@ -9,8 +9,8 @@ import lua.api;
 import lua.luah;
 import lua.lib.libentity;
 import lua.lib.libentity_tmpl;
-import entity.entity;
-import entity.item;
+import scene.entity.entity;
+import scene.entity.item;
 import math.vector;
 
 immutable Api libitem = {

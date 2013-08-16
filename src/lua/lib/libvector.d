@@ -11,8 +11,8 @@ import std.stdio;
 import c.lua;
 
 import math.vector;
-import entity.luaEntity;
-import entity.entity;
+import scene.entity.luaEntity;
+import scene.entity.entity;
 import lua.api;
 import lua.luah;
 

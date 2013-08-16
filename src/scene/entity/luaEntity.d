@@ -5,13 +5,13 @@
  * Brandon Surmanski
  */
 
-module entity.luaEntity;
+module scene.entity.luaEntity;
 
 import c.lua;
 
 import std.string;
 
-import entity.entity;
+import scene.entity.entity;
 import lua.luaValue;
 import lua.lib.callback;
 

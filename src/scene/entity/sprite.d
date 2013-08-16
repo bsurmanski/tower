@@ -5,7 +5,7 @@
  * Brandon Surmanski
  */
 
-module entity.sprite;
+module scene.entity.sprite;
 
 import std.stdio;
 import std.math;
@@ -16,11 +16,11 @@ import c.gl.glfw;
 import gl.glb.glb;
 
 import container.geom.mesh;
-import entity.entity;
-import entity.luaEntity;
+import scene.entity.entity;
+import scene.entity.luaEntity;
 import math.matrix;
 import math.vector;
-import camera;
+import scene.camera;
 
 /**
  * Represents shared data across an actor type. Kind of like a runtime class

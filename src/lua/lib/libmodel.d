@@ -6,8 +6,8 @@ import c.lua;
 import gl.glb.glb;
 import lua.api;
 import lua.luah;
-import entity.modelEntity;
-import entity.entity;
+import scene.entity.modelEntity;
+import scene.entity.entity;
 import lua.lib.libentity;
 import lua.lib.libentity_tmpl;
 

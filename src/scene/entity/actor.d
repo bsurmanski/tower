@@ -5,7 +5,7 @@
  * Brandon Surmanski
  */
 
-module entity.actor;
+module scene.entity.actor;
 
 import std.algorithm;
 import std.stdio;
@@ -17,12 +17,12 @@ import c.gl.glfw;
 import gl.glb.glb;
 
 import lua.lib.callback;
-import entity.entity;
-import entity.item;
-import entity.sprite;
+import scene.entity.entity;
+import scene.entity.item;
+import scene.entity.sprite;
 import math.matrix;
 import math.vector;
-import camera;
+import scene.camera;
 
 /**
  * Represents shared data across an actor type. Kind of like a runtime class

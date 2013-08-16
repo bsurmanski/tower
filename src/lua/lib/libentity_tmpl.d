@@ -13,10 +13,10 @@ module lua.lib.libentity_tmpl;
 import std.traits;
 
 import c.lua;
-import entity.luaEntity;
-import entity.entity;
-import entity.actor;
-import entity.item;
+import scene.entity.luaEntity;
+import scene.entity.entity;
+import scene.entity.actor;
+import scene.entity.item;
 import lua.luah;
 import lua.luaValue;
 
@@ -24,9 +24,9 @@ void lua_push(T)(lua_State *l, T value)
 if(is(Entity == T) || is(LuaEntity == T)) //TODO: change to all classes dirived from Entity
 //if(is(T == class) && (Entity in BaseTypeTuple!(T)))
 {
-    import entity.actor;
-    import entity.item;
-    import entity.modelEntity;
+    import scene.entity.actor;
+    import scene.entity.item;
+    import scene.entity.modelEntity;
     import std.stdio;
     //lua_pushlightuserdata(l, cast(void*) value);
     Entity *ent = cast(Entity*) lua_newuserdata(l, (Entity).sizeof);

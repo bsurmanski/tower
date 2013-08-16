@@ -105,6 +105,7 @@ struct Mesh
         Header header;
         file.rawRead((&header)[0..1]);
 
+        assert(header.magic == "MDL");
         verts.length = header.nverts;
         faces.length = header.nfaces;
         file.rawRead(verts); 
@@ -115,6 +116,15 @@ struct Mesh
     }
 
     ~this(){}
+
+    bool isMdlFormat(File file)
+    {
+        Header header;
+        ulong tell = file.tell();
+        file.rawRead((&header)[0..1]);
+        file.seek(tell);
+        return header.magic == "MDL";
+    }
 
     void opOpAssign(string op)(const Face f[])
     if(op == "~")
@@ -271,7 +281,8 @@ struct Mesh
         return *ibuffer;
     }
 
-    void write(string filenm)
+
+    void write(File file)
     {
         Header header =
         {
@@ -282,10 +293,15 @@ struct Mesh
             name
         };
 
-        File file = File(filenm, "w");
         file.write(header);
         file.write(verts);
         file.write(faces);
+    }
+
+    void write(string filenm)
+    {
+        File file = File(filenm, "w");
+        write(file);
         file.close();
     }
 

@@ -5,17 +5,17 @@
  * Brandon Surmanski
  */
 
-module entity.item;
+module scene.entity.item;
 
 import c.lua;
 import gl.glb.glb;
 
 import std.math;
 
-import entity.entity;
-import entity.sprite;
+import scene.entity.entity;
+import scene.entity.sprite;
 import math.matrix;
-import camera;
+import scene.camera;
 
 class ItemInfo : SpriteInfo
 {

@@ -17,7 +17,7 @@ import c.gl.glext;
 
 import container.geom.mesh;
 import container.geom.grid;
-import camera;
+import scene.camera;
 import math.matrix;
 
 struct Tile

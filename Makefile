@@ -1,12 +1,10 @@
 SRC=src/main.d \
-	src/camera.d \
+	src/scene/camera.d \
 	src/keys.d\
 	src/map/map.d\
 	src/map/wall.d\
 	src/container/geom/mesh.d\
-	src/container/geom/model.d\
 	src/container/geom/grid.d\
-	src/container/phys/scene.d\
 	src/container/list.d\
 	src/lua/api.d\
 	src/lua/luah.d\
@@ -24,12 +22,13 @@ SRC=src/main.d \
 	src/lua/lib/libkey.d\
 	src/lua/lib/libvector.d\
 	src/lua/lib/libvector_tmpl.d\
-	src/entity/actor.d\
-	src/entity/entity.d\
-	src/entity/luaEntity.d\
-	src/entity/item.d\
-	src/entity/modelEntity.d\
-	src/entity/sprite.d\
+	src/scene/scene.d\
+	src/scene/entity/actor.d\
+	src/scene/entity/entity.d\
+	src/scene/entity/luaEntity.d\
+	src/scene/entity/item.d\
+	src/scene/entity/modelEntity.d\
+	src/scene/entity/sprite.d\
 	src/math/matrix.d\
 	src/math/vector.d\
 	src/math/quat.d\

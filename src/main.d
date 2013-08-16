@@ -8,27 +8,23 @@ import gl.glb.glb;
 import std.stdio;
 import std.math;
 
-import lua.state;
 import lua.luaModule;
 import lua.lib.all;
 import container.geom.mesh;
-import container.phys.scene;
+import scene.scene;
 import math.vector;
 import math.matrix;
-import entity.entity;
-import entity.modelEntity;
+import scene.entity.entity;
+import scene.entity.modelEntity;
 import ui.hud.hud;
 import map.map;
-import camera;
+import scene.camera;
 
 GLuint primQuery;
-Buffer buffer = void;
-Mesh quad = void;
-Map testmap = void;
 Camera cam;
 Hud hud_display;
 bool running;
-State state;
+Scene dscene;
  
 
 extern (C) int quit()
@@ -60,21 +56,10 @@ void init(int w, int h)
     cam.basis = Matrix4().skewedy(-PI / 4);
     //cam.position = Vec3(0.0f, 1.5f, 0.0f);
 
-    //TODO load tiles
-    Tile[] tiles = new Tile[32 * 32];
-    testmap = Map(32, 32, tiles);
+    //auto ent = new ModelEntity(state.state, "res/mdl/testroom.mdl", "res/tex/testroom.tga");
 
-    state = new State();
-    state.register(luaApis);
-    state.addToPath("./res/campaigns/main/?.lua");
-
-    state.run("res/default.lua");
-    state.run("res/campaigns/main/ents/");
-    state.run("res/campaigns/main/main.lua");
-
-    auto ent = new ModelEntity(state.state, "res/mdl/testroom.mdl", "res/tex/testroom.tga");
-
-    Scene scene = new Scene("res/towerscene.scn");
+    dscene = new Scene("res/towerscene.scn");
+    //dscene.add(ent);
 
 
     hud_display = new Hud();
@@ -83,8 +68,10 @@ void init(int w, int h)
 void draw()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //testmap.draw(cam);
     Entity.drawAll(cam);
+
+    dscene.draw(cam);
+
     hud_display.draw();
 
     glfwSwapBuffers();
@@ -109,7 +96,7 @@ void update()
     hud_display.update(dt);
     Entity.updateAll(dt);
 
-    import entity.actor;
+    import scene.entity.actor;
     if(Actor.focus)
     {
         cam.position = Actor.focus.position + Vec3(0.0f, 3.5f, 5.0f); 

@@ -7,7 +7,7 @@
 
 module ui.component;
 
-import entity.entity;
+import scene.entity.entity;
 
 //Alignment
 enum
